@@ -7,18 +7,6 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
-  showAssets: boolean = true;   // default = Assets
-  showGTeam: boolean = false;
-  back: any;
 
-  setAssets() {
-    this.showAssets = true;
-    this.showGTeam = false;
-  }
-
-  setGTeam() {
-    this.showAssets = false;
-    this.showGTeam = true;
-  }
 
 }

@@ -3,13 +3,15 @@ import { CommonModule } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { GTeamComponent } from '../g-team/g-team.component';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 
 
 @NgModule({
   declarations: [
     HomeComponent,
-    GTeamComponent
+    GTeamComponent,
+    DashboardComponent,
   ],
   imports: [
     CommonModule,

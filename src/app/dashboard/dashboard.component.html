@@ -1,0 +1,164 @@
+<div class="wallet-container d-flex flex-column min-vh-100">
+    <!-- Header -->
+    <header class="wallet-header d-flex align-items-center justify-content-between px-3 py-2">
+        <!-- Left Side -->
+        <div class="d-flex flex-column">
+          <h6 class="m-0 fw-bold ">Pasha </h6>
+          <small class=" ">btz234</small>
+        </div>
+        <!-- Center -->
+        <h6 class="m-0 fw-bold ">
+          <img src="assets/favicon.png" alt="">
+        </h6>
+    
+        <!-- Right Side -->
+        <div class="d-flex align-items-center gap-3 " >
+          <i class="bi bi-qr-code-scan"></i>
+          <i class="bi bi-plus-circle fs-5"></i>
+        </div>
+      </header>
+      
+    <!-- Balance Card -->
+    <div class="card balance-card mx-3 mt-2 shadow-sm">
+        <div class="card-body">
+            <!-- <div class="d-flex justify-content-between">
+                <h6 class="text-white fw-bold"><i class="bi bi-wallet2"></i> Wallet Asset</h6>
+                <small class=" p-0 " style="background-color: white; color: green;"> Go to Withdraw <i
+                        class="bi bi-arrow-right  mt-2"></i>
+                </small>
+            </div> -->
+            <div class="d-flex justify-content-between align-items-center">
+                <h6 class="text-white fw-bold mb-0">
+                  <i class="bi bi-wallet2"></i> Wallet Asset
+                </h6>
+                
+                <small class="px-2 py-1 rounded text-success bg-white fw-semibold" style="cursor:pointer; font-size: 10px;">
+                  Go to Withdraw <i class="bi bi-arrow-right"></i>
+                </small>
+              </div>
+              
+            <h3 class="fw-bold">$0 </h3>
+            <p class="mb-1"> $0 P2P </p>
+            <small class="text-white fw-bold "> {{ walletAddress }} <i class="fa fa-clone ms-2" aria-hidden="true"
+                    style="cursor: pointer;" (click)="copyAddres()"></i>
+            </small>
+
+
+
+            <p *ngIf="copied" class="text-white">Copied!</p>
+
+            <div class="d-flex justify-content-between mt-3">
+                <div><small>Staking Bonus </small><br>1256 btz</div>
+                <div><small>Team Earing</small><br>$356</div>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-3">
+        <div class="promo-banner">
+            <!-- Left Side Text -->
+            <div class="promo-text">
+                <h6>75% off USDT Transfer Fees with GasFree, No TRX Needed, Fast Delivery!</h6>
+                <a href="#" style="cursor: pointer;">Explore Now →</a>
+            </div>
+
+            <!-- Right Side Image -->
+            <div class="promo-img">
+                <img src="https://cdn-icons-png.flaticon.com/512/1041/1041882.png" alt="promo">
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex flex-nowrap overflow-auto hide-scrollbar">
+                    <div class="scroll-item text-center">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        <p class="mt-2">send</p>
+                    </div>
+                    <div class="scroll-item text-center">
+                        <!-- <i class="fa-solid fa-arrow-down"></i> -->
+                        <i class="bi bi-arrow-down-square"></i>
+                        <p class="mt-2" routerLink="/receive"> Receive</p>
+                    </div>
+                    <div class="scroll-item text-center">
+                        <i class="bi bi-check-square mt-2"></i>
+                        <p class="mt-2">Stake</p>
+                    </div>
+                    <div class="scroll-item text-center">
+                        <i class="fa-solid fa-file-lines"></i>
+                        <p class="mt-2">Reports</p>
+                    </div>
+                    <div class="scroll-item text-center">
+                        <i class="fa fa-gift" aria-hidden="true"></i>
+
+                        <p class="mt-2">Rewards</p>
+                    </div>
+                    <div class="scroll-item text-center">
+                        <i class="bi bi-check-square mt-2"></i>
+                        <p class="mt-2">receive</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container p-4">
+        <div class="row">
+            <div class="col-6">
+                <button class="btn btn-link fw-bold p-0" [class.text-primary]="showAssets" (click)="setAssets()">
+                    Assets
+                </button>
+            </div>
+
+            <div class="col-6 text-end">
+                <button class="btn btn-link fw-bold p-0" [class.text-primary]="showGTeam" (click)="setGTeam()">
+                    G team
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Assets View -->
+    <div class="mb-5" *ngIf="showAssets">
+        <main class="container my-4">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="fw-bold">Recent Transactions</div>
+                <a href="#" class="small text-decoration-none">View all</a>
+            </div>
+
+            <div class="vstack gap-2">
+                <div class="txn-card">
+                    <div class="txn-icon"><i class="bi bi-person"></i></div>
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between">
+                            <div class="txn-title">Ravi Kumar</div>
+                            <div class="txn-amt text-success">+ ₹500.00</div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="txn-sub">UPI • 25 Aug 2025, 10:12 AM</div>
+                            <span class="badge rounded-pill badge-success">Success</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="vstack gap-2 mt-3">
+                <div class="txn-card">
+                    <div class="txn-icon"><i class="bi bi-person"></i></div>
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between">
+                            <div class="txn-title">Ravi Kumar</div>
+                            <div class="txn-amt text-success">+ ₹500.00</div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="txn-sub">UPI • 25 Aug 2025, 10:12 AM</div>
+                            <span class="badge rounded-pill badge-success">Success</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <!-- G Team View -->
+    <div *ngIf="showGTeam">
+        <app-g-team></app-g-team>
+    </div>
