@@ -1,0 +1,61 @@
+
+
+ 
+
+  <!-- Back -->
+  <div class="container-fluid">
+    <div class="container p-1 mt-3">
+      <h6 class="fw-bold back-link" onclick="history.back()">
+        <i class="fa fa-chevron-left"></i> Back
+      </h6>
+    </div>
+  </div>
+
+  <!-- Wallet Add Form -->
+  <div class="container my-3">
+    <div class="card balance-card shadow border-0 rounded-4 mx-auto" style="max-width:420px;">
+      <div class="card-body p-4">
+        <h4 class="fw-bold text-center mb-4">$0.00</h4>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Wallet ID</label>
+          <input type="text" class="form-control form-control-lg rounded-3" placeholder="Enter Wallet ID">
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Amount</label>
+          <input type="number" class="form-control form-control-lg rounded-3" placeholder="Enter Amount">
+        </div>
+        <div class="d-grid">
+          <button class="btn btn-success btn-lg rounded-3">Add Money</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- App Bar -->
+
+
+  <!-- Transactions -->
+  <main class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <div class="fw-bold">Recent Transactions</div>
+      <a href="#" class="small text-decoration-none">View all</a>
+    </div>
+
+    <div class="vstack gap-2">
+      <div class="txn-card">
+        <div class="txn-icon"><i class="bi bi-person"></i></div>
+        <div class="flex-grow-1">
+          <div class="d-flex justify-content-between">
+            <div class="txn-title">Ravi Kumar</div>
+            <div class="txn-amt text-success">+ ₹500.00</div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="txn-sub">UPI • 25 Aug 2025, 10:12 AM</div>
+            <span class="badge rounded-pill badge-success">Success</span>
+          </div>
+        </div>
+      </div>
+      <!-- Repeat txn-card for more entries -->
+    </div>
+  </main>
+

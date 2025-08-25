@@ -1,0 +1,82 @@
+// .wallet-header {
+//   background: linear-gradient(135deg, #2c5cff, #00bfff);
+// }
+
+.balance-card {
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  color: white;
+}
+
+.bottom-nav a {
+  font-size: 0.9rem;
+}
+// gift cards
+
+.promo-banner {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.promo-text h6 {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.promo-text a {
+  font-weight: 600;
+  text-decoration: none;
+  color: #0d6efd;
+}
+.promo-text a:hover {
+  text-decoration: underline;
+}
+.promo-img img {
+  max-width: 60px;
+  height: auto;
+}
+
+/* Mobile Responsive */
+@media (max-width: 576px) {
+  .promo-banner {
+    flex-direction: row;
+    text-align: left;
+  }
+  .promo-img img {
+    max-width: 50px;
+  }
+}
+// scroller
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Always 4 items visible */
+.scroll-item {
+  flex: 0 0 25%;   /* 25% width per item */
+  max-width: 25%;
+  padding: 0 10px;
+}
+// navs
+.bottom-nav a {
+  color: #212529; /* default dark */
+  transition: color 0.3s ease;
+}
+
+.bottom-nav a:hover {
+  color: #0d6efd!important; /* hover blue */
+}
+
+.bottom-nav a.active-link {
+  color: #0d6efd !important; /* active blue */
+}
+
+

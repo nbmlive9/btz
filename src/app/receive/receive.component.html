@@ -1,0 +1,53 @@
+<div class="container-fluid" style=" 
+font-family: Arial, sans-serif;">
+    <div class="container p-1 mt-4 mx-2">
+        <!-- <h6 routerLink="/home" class="fw-bold"><i class="fa fa-chevron-left" aria-hidden="true"> </i> Receive</h6> -->
+        <h6 class="fw-bold" style="cursor: pointer;" (click)="goBack()">
+            <i class="fa fa-chevron-left"></i> Receive
+          </h6>
+    </div>
+    <div class="container">
+        <div class="wallet-card">
+            <h6 class="text-muted">Scan the QR Code and Pay</h6>
+            <!-- QR Code -->
+            <div class="qr-box">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TMjRqfsBJWATC57KwY2aRnHB7uc3f7Z5B"
+                    alt="QR Code" class="img-fluid">
+            </div>
+            <!-- Wallet -->
+            <h5>Wallet <span class="badge bg-light text-dark">General Address</span></h5>
+            <div class="wallet-address">
+                {{ walletAddress }}
+                <i class="fa fa-clone ms-2 " aria-hidden="true" 
+                   style="cursor: pointer;" 
+                   (click)="copyAddress()"></i>
+              </div>
+              
+              <!-- Optional success message -->
+              <p *ngIf="copied" class="text-success small mt-1">Copied!</p>
+              
+            <a href="#" class="d-block text-primary small mb-3">Switch to GasFree Address ⇆</a>
+            <!-- Buttons -->
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-outline-primary btn-custom w-50 me-2">
+                  <i class="fa fa-bookmark me-1" aria-hidden="true"></i>
+                  Save QR 
+                </button>
+              
+                <button class="btn btn-outline-primary btn-custom w-50">
+                  <i class="fa fa-share-square-o me-1 " aria-hidden="true"></i>
+                  Share
+                </button>
+              </div>
+              
+
+            <!-- Footer -->
+       
+        </div>
+    </div>
+    <p class="footer-note  text-center">
+        You can only transfer TRON-based tokens (e.g. TRX or TRC10/20/721 tokens)
+        to this address. Transfers of other tokens cannot be revoked.
+    </p>
+    <!-- <h6 class="text-center mb-5 mt-5"><img src="assets/favicon.png" style="height: 20px; width: 20px;" alt=""> Bitraze</h6> -->
+</div>
