@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home.component';
-import { ReceiveComponent } from '../receive/receive.component';
-import { TransferAmountComponent } from '../transfer-amount/transfer-amount.component';
+import { ReceiveComponent } from './receive/receive.component';
+import { TransferAmountComponent } from './transfer-amount/transfer-amount.component';
 import { ProfileComponent } from '../profile/profile.component';
 
 const routes: Routes = [
@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'receive', component: ReceiveComponent },
   { path: 'transfer', component: TransferAmountComponent },
-  { path: 'profile', component: ProfileComponent }
+  { path: 'profile', component: ProfileComponent },
 
 ];
 

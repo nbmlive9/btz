@@ -2,8 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
-import { GTeamComponent } from '../g-team/g-team.component';
-import { DashboardComponent } from '../dashboard/dashboard.component';
+import { FooterComponent } from './footer/footer.component';
+import { GTeamComponent } from './g-team/g-team.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProfileComponent } from '../profile/profile.component';
+import { TransferAmountComponent } from './transfer-amount/transfer-amount.component';
+import { ReceiveComponent } from './receive/receive.component';
 
 
 
@@ -12,6 +16,7 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
     HomeComponent,
     GTeamComponent,
     DashboardComponent,
+    FooterComponent, ProfileComponent, TransferAmountComponent, ReceiveComponent
   ],
   imports: [
     CommonModule,

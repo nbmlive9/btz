@@ -4,19 +4,21 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
+  
+  {
+    path: '',
+    component: LoginComponent
+  },
+   {
+    path: 'sign',
+    component: SignUpComponent
+  },
   {
     path: '',
     loadChildren: () =>
       import('./home/home.module').then(m => m.HomeModule) // lazy loaded Home
   },
-  {
-    path: 'sign',
-    component: SignUpComponent
-  },
-  {
-    path: 'login',
-    component: LoginComponent
-  },
+ 
   {
     path: '**',
     redirectTo: '' // wildcard MUST come last

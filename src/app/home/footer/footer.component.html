@@ -1,10 +1,8 @@
-<!-- Main router outlet -->
-<router-outlet></router-outlet>
 <!-- Bottom Navigation (hidden on login & signup) -->
-<!-- <div *ngIf="!hideBottomNav()" 
+<div *ngIf="!hideBottomNav()" 
      class="bottom-nav bg-light d-flex justify-content-around py-2 border-top fixed-bottom">
 
-  <a routerLink="/" 
+  <a routerLink="/home" 
      routerLinkActive="active-link" 
      [routerLinkActiveOptions]="{ exact: true }"
      class="text-center text-decoration-none">
@@ -28,4 +26,4 @@
      class="text-center text-decoration-none">
     <i class="bi bi-person"></i><br>Profile
   </a>
-</div> -->
+</div>
