@@ -1,8 +1,9 @@
 <!-- Main router outlet -->
 <router-outlet></router-outlet>
+<!-- Bottom Navigation (hidden on login & signup) -->
+<div *ngIf="!hideBottomNav()" 
+     class="bottom-nav bg-light d-flex justify-content-around py-2 border-top fixed-bottom">
 
-<!-- Bottom Navigation (common for all pages) -->
-<div class="bottom-nav bg-light d-flex justify-content-around py-2 border-top fixed-bottom">
   <a routerLink="/" 
      routerLinkActive="active-link" 
      [routerLinkActiveOptions]="{ exact: true }"
