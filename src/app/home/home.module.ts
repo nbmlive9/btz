@@ -7,6 +7,12 @@ import { GTeamComponent } from './g-team/g-team.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TransferAmountComponent } from './transfer-amount/transfer-amount.component';
 import { ReceiveComponent } from './receive/receive.component';
+import { DepositComponent } from './deposit/deposit.component';
+import { DirectTeamComponent } from './direct-team/direct-team.component';
+import { ReportComponent } from './report/report.component';
+import { BuyLiteComponent } from './buy-lite/buy-lite.component';
+import { BuyProComponent } from './buy-pro/buy-pro.component';
+import { BuyMaxComponent } from './buy-max/buy-max.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
@@ -18,7 +24,7 @@ import { ProfileComponent } from './profile/profile.component';
     HomeComponent,
     GTeamComponent,
     DashboardComponent,
-    FooterComponent, ProfileComponent, TransferAmountComponent, ReceiveComponent
+    FooterComponent, ProfileComponent, TransferAmountComponent, ReceiveComponent, DepositComponent, DirectTeamComponent, ReportComponent, BuyLiteComponent, BuyProComponent, BuyMaxComponent
   ],
   imports: [
     CommonModule,
