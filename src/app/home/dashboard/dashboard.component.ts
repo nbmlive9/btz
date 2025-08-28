@@ -20,11 +20,13 @@ export class DashboardComponent {
 
   pfdata:any;
   hdata:any;
-    setassets: boolean = true;
+  setassets: boolean = true;
   glevel: boolean = false;
+  referrals: boolean = false;
     showSection(section: string) {
     this.setassets = section === 'setassets';
     this.glevel = section === 'glevel';
+    this.referrals = section === 'referrals';
   }
   wdata:any;
   constructor(private api:AuthUserService){}

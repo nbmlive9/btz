@@ -11,6 +11,7 @@ import { ReportComponent } from './report/report.component';
 import { BuyLiteComponent } from './buy-lite/buy-lite.component';
 import { BuyProComponent } from './buy-pro/buy-pro.component';
 import { BuyMaxComponent } from './buy-max/buy-max.component';
+import { ReferralsComponent } from './referrals/referrals.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,7 +25,7 @@ const routes: Routes = [
   { path: 'bitraze-lite', component: BuyLiteComponent },
   { path: 'bitraze-pro', component: BuyProComponent },
   { path: 'report-max', component: BuyMaxComponent },
-
+  { path: 'myreferrals', component: ReferralsComponent },
   
 
 
