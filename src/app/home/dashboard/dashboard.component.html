@@ -3,8 +3,8 @@
     <header class="wallet-header d-flex align-items-center justify-content-between px-3 py-2">
         <!-- Left Side -->
         <div class="d-flex flex-column">
-          <h6 class="m-0 fw-bold ">Pasha </h6>
-          <small class=" ">btz234</small>
+          <h6 class="m-0 fw-bold "> {{pfdata?.name}}  </h6>
+          <small class=" ">{{pfdata?.regid}}</small>
         </div>
         <!-- Center -->
         <h6 class="m-0 fw-bold ">
@@ -37,9 +37,9 @@
                 </small>
               </div>
               
-            <h3 class="fw-bold">$0 </h3>
-            <p class="mb-1"> $0 P2P </p>
-            <small class="text-white fw-bold "> {{ walletAddress }} <i class="fa fa-clone ms-2" aria-hidden="true"
+            <h3 class="fw-bold">{{pfdata?.walletamount | currency:'USD':true:'1.0-2' }} </h3>
+            <p class="mb-1"> {{pfdata?.actwallet | currency:'USD':true:'1.0-2' }} P2P </p>
+            <small class="text-white fw-bold "> {{pfdata?.wallet1}} <i class="fa fa-clone ms-2" aria-hidden="true"
                     style="cursor: pointer;" (click)="copyAddres()"></i>
             </small>
 
@@ -48,8 +48,8 @@
             <p *ngIf="copied" class="text-white">Copied!</p>
 
             <div class="d-flex justify-content-between mt-3">
-                <div><small>Staking Bonus </small><br>1256 btz</div>
-                <div><small>Team Earing</small><br>$356</div>
+                <div><small>Staking Bonus </small><br> {{hdata?.dailyincome | currency:'USD':true:'1.0-2'}} btz</div>
+                <div><small>My Referrals</small><br><i class="fa fa-user"></i> {{hdata?.sponsors}} </div>
             </div>
         </div>
     </div>
@@ -58,7 +58,7 @@
             <!-- Left Side Text -->
             <div class="promo-text">
                 <h6>75% off USDT Transfer Fees with GasFree, No TRX Needed, Fast Delivery!</h6>
-                <a href="#" style="cursor: pointer;">Explore Now →</a>
+                <a routerLink="/dashboard" style="cursor: pointer;">Explore Now →</a>
             </div>
 
             <!-- Right Side Image -->
@@ -105,13 +105,13 @@
     <div class="container p-4">
         <div class="row">
             <div class="col-6">
-                <button class="btn btn-link fw-bold p-0" [class.text-primary]="showAssets" (click)="setAssets()">
+                <button class="btn btn-link fw-bold p-0"  (click)="showSection('setassets')">
                     Assets
                 </button>
             </div>
 
             <div class="col-6 text-end">
-                <button class="btn btn-link fw-bold p-0" [class.text-primary]="showGTeam" (click)="setGTeam()">
+                <button class="btn btn-link fw-bold p-0" (click)="showSection('glevel')">
                     G team
                 </button>
             </div>
@@ -119,7 +119,7 @@
     </div>
 
     <!-- Assets View -->
-    <div class="mb-5" *ngIf="showAssets">
+    <div class="mb-5" *ngIf="setassets">
         <main class="container my-4">
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <div class="fw-bold">Recent Transactions</div>
@@ -159,6 +159,8 @@
         </main>
     </div>
     <!-- G Team View -->
-    <div *ngIf="showGTeam">
+    <div *ngIf="glevel">
         <app-g-team></app-g-team>
     </div>
+
+    <app-footer></app-footer>

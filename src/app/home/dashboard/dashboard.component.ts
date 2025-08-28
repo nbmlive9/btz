@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthUserService } from '../service/auth-user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,11 +8,8 @@ import { Component } from '@angular/core';
 })
 export class DashboardComponent {
 
-  showAssets: boolean = true;   // default = Assets
-  showGTeam: boolean = false;
   back: any;
-
-  walletAddress: string = 'TMjRqfsBJWATC57KwY2aRnH';
+  walletAddress: string = '';
   copied: boolean = false;
   copyAddres() {
     navigator.clipboard.writeText(this.walletAddress).then(() => {
@@ -19,14 +17,39 @@ export class DashboardComponent {
       setTimeout(() => this.copied = false, 2000); // hide after 2 sec
     });
   }
-  setAssets() {
-    this.showAssets = true;
-    this.showGTeam = false;
+
+  pfdata:any;
+  hdata:any;
+    setassets: boolean = true;
+  glevel: boolean = false;
+    showSection(section: string) {
+    this.setassets = section === 'setassets';
+    this.glevel = section === 'glevel';
+  }
+  wdata:any;
+  constructor(private api:AuthUserService){}
+
+  ngOnInit(){
+    this.getProfiledata();
+    this.getDashboarddata();
+    this.api.WalletReport().subscribe((res:any)=>{
+        console.log('walletreport',res);
+        this.wdata=res.data;
+    })
   }
 
-  setGTeam() {
-    this.showAssets = false;
-    this.showGTeam = true;
+  getProfiledata(){
+    this.api.Profile().subscribe((res:any)=>{
+      console.log('profile',res);
+      this.pfdata=res.data[0];
+    })
+  }
+
+    getDashboarddata(){
+    this.api.DashboardData().subscribe((res:any)=>{
+      console.log('homedata',res);
+      this.hdata=res.data;
+    })
   }
 
 

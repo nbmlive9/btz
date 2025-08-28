@@ -7,7 +7,7 @@
                <img src="assets/favicon.png" class="img-fluid" alt="" srcset="">
              </div>
             <h1 class="text-center mb-4 fw-bold text-white">REGISTER</h1>
-            <form >
+            <form [formGroup]="form" novalidate>
               <div class="row g-3 form-box">
                 <div class="col-sm-6">
                   <label class="form-label">Full Name</label>
@@ -35,7 +35,9 @@
                   <label class="form-label">Referral ID</label>
                   <div class="input-wrapper">
                     <i class="fas fa-key input-icon"></i>
-                    <input type="text" formControlName="sponcerid"  placeholder="Enter referral ID" class="form-control">
+                    <input type="text" formControlName="sponcerid"  placeholder="Enter referral ID" class="form-control" (keyup)="onRegisterIdSelect($event)">
+                      <span class="text-success">{{idselectmsg}}</span>
+                            <span class="text-danger">{{errorMessage}}</span>
                   </div>
                 </div>
               </div>
@@ -46,7 +48,7 @@
                  <span class="text-white">I have read and agree to </span> <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal" class="text-white">Terms & Conditions</a>
                 </label>
               </div>
-              <button type="submit" class="btn btn-danger w-100 mt-3 rounded-pill">Sign Up</button>
+              <button type="submit" class="btn btn-danger w-100 mt-3 rounded-pill" (click)="userSubmit()" [disabled]="!form.valid">Sign Up</button>
               <div class="text-center mt-3 text-white">
                 Already have an account? <a routerLink="/login" class="text-primary text-white">Log In</a>
               </div>
