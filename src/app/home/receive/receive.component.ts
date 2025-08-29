@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';   // ✅ Correct import
+import { AuthUserService } from '../service/auth-user.service';
 
 
 @Component({
@@ -9,8 +10,9 @@ import { Location } from '@angular/common';   // ✅ Correct import
 })
 export class ReceiveComponent {
 
-
-  constructor(private location: Location) {}
+rdata:any;
+pdata:any;
+  constructor(private location: Location, private api:AuthUserService) {}
 goBack() {
   this.location.back();
 }
@@ -23,6 +25,22 @@ goBack() {
       this.copied = true;
       setTimeout(() => this.copied = false, 2000); // hide after 2 sec
     });
+  }
+
+  ngOnInit(){
+    this.receiveddata();
+    this.api.Profile().subscribe((res:any)=>{
+      console.log('profile',res)
+      this.pdata=res.data;
+    });
+  }
+
+  receiveddata(){
+    this.api.RecivedWalletReport().subscribe((res:any)=>{
+      console.log(res);
+      this.rdata=res.data;
+      
+    })
   }
 
 }

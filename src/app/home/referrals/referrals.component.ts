@@ -17,7 +17,7 @@ data1:any;
   getreferrals(){
     this.api.Referrals().subscribe((res:any)=>{
         console.log(res);
-        this.data1=res.data;
+        this.data1=res.data.data;
     })
   }
 
