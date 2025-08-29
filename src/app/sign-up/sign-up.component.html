@@ -48,7 +48,7 @@
                  <span class="text-white">I have read and agree to </span> <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal" class="text-white">Terms & Conditions</a>
                 </label>
               </div>
-              <button type="submit" class="btn btn-danger w-100 mt-3 rounded-pill" (click)="userSubmit()" [disabled]="!form.valid">Sign Up</button>
+              <button type="submit" class="btn btn-danger w-100 mt-3 rounded-pill"   data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="userSubmit()" [disabled]="!form.valid">Sign Up</button>
               <div class="text-center mt-3 text-white">
                 Already have an account? <a routerLink="/login" class="text-primary text-white">Log In</a>
               </div>
@@ -60,7 +60,11 @@
   </section>
   
   <!-- Google Fonts -->
-  
+  <!-- <button type="button" class="btn btn-primary"
+        data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Open Modal
+</button> -->
+
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content success-modal">
@@ -71,21 +75,21 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
   
-        <!-- <div class="modal-body custom-bg text-center">
+        <div class="modal-body custom-bg text-center">
           <ng-container *ngIf="udata; else noData">
             <div class="details-card p-3">
-              <p><strong>Name:</strong> {{ udata.Username }}</p>
-              <p><strong>User ID:</strong> {{ udata.Registerid }}</p>
+              <p><strong>Name:</strong> {{ udata.name }}</p>
+              <p><strong>User ID:</strong> {{ udata.regid }}</p>
               <p><strong>Password:</strong> {{ udata.password }}</p>
-              <p><strong>Sponsor ID:</strong> {{ udata.Sponcerid }}</p>
-              <p><strong>Sponsor Name:</strong> {{ udata.Sponcername }}</p>
+              <p><strong>Sponsor ID:</strong> {{ udata.refid }}</p>
+              <p><strong>Sponsor Name:</strong> {{ udata.sname }}</p>
             </div>
           </ng-container>
   
           <ng-template #noData>
             <p class="text-muted">No registration data available.</p>
           </ng-template>
-        </div> -->
+        </div>
   
         <div class="modal-footer border-0 justify-content-center">
           <button type="button" class="btn btn-success px-4" data-bs-dismiss="modal">

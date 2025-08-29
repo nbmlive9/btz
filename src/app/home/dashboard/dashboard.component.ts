@@ -35,8 +35,8 @@ export class DashboardComponent {
     this.getProfiledata();
     this.getDashboarddata();
     this.api.WalletReport().subscribe((res:any)=>{
-        console.log('walletreport',res);
-        this.wdata=res.data;
+     console.log('walletreport',res);
+     this.wdata=res.data;
     })
   }
 
@@ -46,7 +46,6 @@ export class DashboardComponent {
       this.pfdata=res.data[0];
     })
   }
-
     getDashboarddata(){
     this.api.DashboardData().subscribe((res:any)=>{
       console.log('homedata',res);

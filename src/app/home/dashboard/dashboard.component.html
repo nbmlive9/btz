@@ -36,14 +36,17 @@
                   Go to Withdraw <i class="bi bi-arrow-right"></i>
                 </small>
               </div>
+              <h3 class="fw-bold">
+                {{ pfdata?.walletamount | currency:'USD':'symbol':'1.0-2' }}
+              </h3>
+              <p class="mb-1">
+                {{ pfdata?.actwallet | currency:'USD':'symbol':'1.0-2' }} P2P
+              </p>
               
-            <h3 class="fw-bold">{{pfdata?.walletamount | currency:'USD':true:'1.0-2' }} </h3>
-            <p class="mb-1"> {{pfdata?.actwallet | currency:'USD':true:'1.0-2' }} P2P </p>
             <small class="text-white fw-bold "> {{pfdata?.wallet1}} <i class="fa fa-clone ms-2" aria-hidden="true"
                     style="cursor: pointer;" (click)="copyAddres()"></i>
             </small>
 
-<!-- update -->
 
             <p *ngIf="copied" class="text-white">Copied!</p>
 
@@ -118,18 +121,18 @@
     <div class="container p-4">
         <div class="row">
             <div class="col-4">
-                <button class="btn btn-link fw-bold p-0"  (click)="showSection('setassets')">
+                <button class="btn fw-bold p-0 " style="color: blue; cursor: pointer;"  (click)="showSection('setassets')">
                     Assets
                 </button>
             </div>
             <div class="col-4">
-                <button class="btn btn-link fw-bold p-0"  (click)="showSection('referrals')">
+                <button class="btn  fw-bold p-0" style="color: blue; cursor: pointer;"    (click)="showSection('referrals')">
                     Referrals
                 </button>
             </div>
 
             <div class="col-4 text-end">
-                <button class="btn btn-link fw-bold p-0" (click)="showSection('glevel')">
+                <button class="btn  fw-bold p-0" style="color: blue; cursor: pointer;"    (click)="showSection('glevel')">
                     G team
                 </button>
             </div>

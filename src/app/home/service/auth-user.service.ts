@@ -63,6 +63,7 @@ export class AuthUserService {
     password: string;
     name: string;
     walletaddress: string;
+    smartid:string;
   }) {
     const token1 = this.token.getToken();
     const httpOptions = {
@@ -78,6 +79,7 @@ export class AuthUserService {
         "password":value.password, 
         "name":value.name, 
         "walletaddress":value.walletaddress, 
+        "smartid":value.smartid,
       },
       httpOptions
     );
