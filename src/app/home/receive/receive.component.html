@@ -1,5 +1,4 @@
-<div class="container-fluid mb-5" style=" 
-font-family: Arial, sans-serif;">
+<div class="container-fluid mb-5" style="font-family: Arial, sans-serif;">
     <div class="container p-1 mt-4 mx-2">
         <h6 class="fw-bold" style="cursor: pointer;" (click)="goBack()">
             <i class="fa fa-chevron-left"></i> Receive
@@ -55,16 +54,16 @@ font-family: Arial, sans-serif;">
         <!-- <a href="#" class="small text-decoration-none">View all</a> -->
       </div>
   
-      <div class="vstack gap-2 mt-3 mb-3">
+      <div class="vstack gap-2 mt-3 mb-3" *ngFor="let row of rdata">
         <div class="txn-card" >
           <div class="txn-icon"><i class="bi bi-person"></i></div>
           <div class="flex-grow-1">
             <div class="d-flex justify-content-between">
-              <div class="txn-title">Ravi Kumar</div>
-              <div class="txn-amt text-success">+ ₹500.00</div>
+              <div class="txn-title">{{row.fromid}}</div>
+              <div class="txn-amt text-success">{{row.amount | currency:'USD':true:'1.0-2'}}</div>
             </div>
             <div class="d-flex justify-content-between align-items-center">
-              <div class="txn-sub">UPI • 25 Aug 2025, 10:12 AM</div>
+              <div class="txn-sub">{{row.cdate | date:'dd/MMM/YYYY'}} - {{row.ctime}}</div>
               <span class="badge rounded-pill badge-success">Success</span>
             </div>
           </div>
@@ -77,3 +76,4 @@ font-family: Arial, sans-serif;">
 </div>
 
   <app-footer></app-footer>
+

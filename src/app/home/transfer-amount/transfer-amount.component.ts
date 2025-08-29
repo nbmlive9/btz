@@ -14,6 +14,7 @@ export class TransferAmountComponent {
   regname:any;
     errorMessage = '';
     form:FormGroup;
+    tdata:any;
   constructor(private location: Location, private api:AuthUserService, private fb:FormBuilder) {
      this.form = this.fb.group({
           regid: new FormControl('', [Validators.required]),
@@ -26,6 +27,10 @@ export class TransferAmountComponent {
 
 ngOnInit(){
   this.getProfiledata();
+  this.api.TransferWalletReport().subscribe((res:any)=>{
+     console.log('transfer',res);
+     this.tdata=res.data;
+  })
 }
 
  getProfiledata(){
