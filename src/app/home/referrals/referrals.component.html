@@ -11,11 +11,16 @@
                     <div class="flex-grow-1">
                         <div class="d-flex justify-content-between">
                             <div class="txn-title">{{row.name}}</div>
-                            <div class="txn-amt text-success">+ ₹500.00</div>
+                            <div class="txn-amt text-success">{{row.regid}}</div>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <div class="txn-sub">UPI • 25 Aug 2025, 10:12 AM</div>
-                            <span class="badge rounded-pill badge-success">Success</span>
+                            <div class="txn-sub">{{row.cdate | date:'dd/MMM/YYYY'}}</div>
+                           <div *ngIf="row.topupstatus=='1'">
+                                 <span class="text-success"  >Activated</span>
+                           </div> 
+                            <div *ngIf="row.topupstatus=='0'">
+                               <span class="text-danger">Not Activated</span>
+                            </div>
                         </div>
                     </div>
                 </div>

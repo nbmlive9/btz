@@ -11,6 +11,7 @@ export class DashboardComponent {
   back: any;
   walletAddress: string = '';
   copied: boolean = false;
+  pack: any;
   copyAddres() {
     navigator.clipboard.writeText(this.walletAddress).then(() => {
       this.copied = true;
@@ -36,8 +37,12 @@ export class DashboardComponent {
     this.getDashboarddata();
     this.api.WalletReport().subscribe((res:any)=>{
      console.log('walletreport',res);
-     this.wdata=res.data;
-    })
+     this.wdata=res.data.data;
+    });
+    this.api.GetPackages().subscribe((res:any)=>{
+        console.log('packages',res);
+        this.pack=res.data;
+    });
   }
 
   getProfiledata(){
@@ -52,6 +57,7 @@ export class DashboardComponent {
       this.hdata=res.data;
     })
   }
+  
 
 
 }

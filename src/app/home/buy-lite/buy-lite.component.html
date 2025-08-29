@@ -38,17 +38,17 @@
 
 <!-- Deposit Transactions -->
 <main class="container my-4 mb-5">
-  <div class="fw-bold mb-3">Deposit Transactions</div>
-  <div class="vstack gap-3">
+  <div class="fw-bold mb-3">Purchase Transactions</div>
+  <div class="vstack gap-3" *ngFor="let row of adata">
     <div class="txn-card d-flex align-items-center p-3 rounded-3 shadow-sm  border-4">
       <div class="txn-icon me-3 fs-3 text-success"><i class="bi bi-person-circle"></i></div>
       <div class="flex-grow-1">
         <div class="d-flex justify-content-between">
-          <div class="txn-title fw-semibold">Ravi Kumar</div>
-          <div class="txn-amt text-success fw-bold">+ ₹500.00</div>
+          <div class="txn-title fw-semibold" *ngIf="row.ptype=='lite'">Lite Package</div>
+          <div class="txn-amt text-success fw-bold">{{row.amount | currency:'USD':true:'1.0-2' }}</div>
         </div>
         <div class="d-flex justify-content-between align-items-center small text-muted">
-          <div class="txn-sub">UPI • 25 Aug 2025, 10:12 AM</div>
+          <div class="txn-sub">{{row.cdate | date:'dd/MM/YYYY'}}</div>
           <span class="badge bg-success rounded-pill">Success</span>
         </div>
       </div>
@@ -69,20 +69,29 @@
 
       <!-- Modal Body -->
       <div class="modal-body">
-        <form>
+        <form [formGroup]="form">
           <!-- Amount Input -->
           <div class="mb-3">
             <label class="form-label fw-semibold">Enter Amount</label>
-            <input type="number" id="amountInput" class="form-control form-control-lg rounded-3" placeholder="Enter Amount" />
+            <input type="hidden" formControlName="regid" class="form-control form-control-lg rounded-3" [(ngModel)]="pdata.regid" />
+            <input type="number" id="amountInput" class="form-control form-control-lg rounded-3" placeholder="$10" readonly>
           </div>
+
           <!-- Balance Info -->
-          <h6 class="text-primary fw-bold">Available Balance: <span class="text-success">$400</span></h6>
-          
+          <h6 class="text-primary fw-bold">
+            Available Balance:
+            <span class="text-success">{{pdata.actwallet | currency:'USD':true:'1.0-2'}}</span>
+          </h6>
+
           <!-- Submit -->
           <div class="text-center mt-4">
-            <button type="button" class="btn btn-success rounded-pill px-4" data-bs-dismiss="modal">Confirm</button>
+            <button type="button" class="btn btn-success rounded-pill px-4"
+                    (click)="submitAction()" data-bs-dismiss="modal">
+              Confirm
+            </button>
           </div>
         </form>
+
       </div>
 
     </div>

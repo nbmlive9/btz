@@ -110,9 +110,11 @@
         <div class="row">
             <div class="col-4">
                 <img src="assets/card1.jpg" routerLink="/bitraze-lite" class="img-fluid" alt="">
-            </div>     <div class="col-4">
+            </div>     
+            <div class="col-4">
                 <img src="assets/card1.jpg" routerLink="/bitraze-pro" class="img-fluid" alt="">
-            </div>     <div class="col-4">
+            </div>     
+            <div class="col-4">
                 <img src="assets/card1.jpg" routerLink="/bitraze-max" class="img-fluid" alt="">
             </div>
         </div>
@@ -147,36 +149,22 @@
                 <a href="#" class="small text-decoration-none">View all</a>
             </div>
 
-            <div class="vstack gap-2">
+            <div class="vstack gap-2" *ngFor="let wd of wdata">
                 <div class="txn-card">
                     <div class="txn-icon"><i class="bi bi-person"></i></div>
                     <div class="flex-grow-1">
                         <div class="d-flex justify-content-between">
-                            <div class="txn-title">Ravi Kumar</div>
-                            <div class="txn-amt text-success">+ ₹500.00</div>
+                            <div class="txn-title">{{wd.remark}}</div>
+                            <div class="txn-amt text-success">{{wd.amount | currency:'USD':true:'1.0-2' }}</div>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <div class="txn-sub">UPI • 25 Aug 2025, 10:12 AM</div>
-                            <span class="badge rounded-pill badge-success">Success</span>
+                            <div class="txn-sub">{{wd.cdate | date:'dd/MM/YYYY'}}</div>
+                            <span class="badge rounded-pill badge-success">Credit</span>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="vstack gap-2 mt-3">
-                <div class="txn-card">
-                    <div class="txn-icon"><i class="bi bi-person"></i></div>
-                    <div class="flex-grow-1">
-                        <div class="d-flex justify-content-between">
-                            <div class="txn-title">Ravi Kumar</div>
-                            <div class="txn-amt text-success">+ ₹500.00</div>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="txn-sub">UPI • 25 Aug 2025, 10:12 AM</div>
-                            <span class="badge rounded-pill badge-success">Success</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         </main>
     </div>
     <div *ngIf="referrals" class="mb-5">
