@@ -63,3 +63,23 @@
 background-color: #1cc88a;
 border-radius: 30px;
 }
+  .price-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .price-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  }
+  .bg-gradient-green {
+    background: linear-gradient(135deg, #28a745, #81c784);
+  }
+  .bg-gradient-blue {
+    background: linear-gradient(135deg, #007bff, #64b5f6);
+  }
+  .bg-gradient-purple {
+    background: linear-gradient(135deg, #6f42c1, #ba68c8);
+  }
+  .txn-card {
+    background: #fdfdfd;
+  }
+

@@ -63,7 +63,7 @@ export class AuthUserService {
     password: string;
     name: string;
     walletaddress: string;
-    smartid:string;
+    regid:string;
   }) {
     const token1 = this.token.getToken();
     const httpOptions = {
@@ -79,7 +79,7 @@ export class AuthUserService {
         "password":value.password, 
         "name":value.name, 
         "walletaddress":value.walletaddress, 
-        "smartid":value.smartid,
+        "regid":value.regid,
       },
       httpOptions
     );
@@ -310,4 +310,16 @@ DepositWallet(value: { amount: string, note: string, transno: string }) {
   }
 
 
+  levelMember() {
+    const token1 = this.token.getToken();
+ const httpOptions = {
+   headers: new HttpHeaders({
+     'Content-Type': 'application/json',
+     'Authorization': 'Bearer ' + token1
+   }),
+   };
+     return this.http.get(AUTH_API + 'Level_members', httpOptions);
+ }
+
+ 
 }

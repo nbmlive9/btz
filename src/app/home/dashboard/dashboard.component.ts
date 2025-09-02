@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { AuthUserService } from '../service/auth-user.service';
 
+import { BarcodeFormat } from '@zxing/library';   // 👈 important
+
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -9,8 +12,10 @@ import { AuthUserService } from '../service/auth-user.service';
 export class DashboardComponent {
 
   back: any;
+  team:any;
   walletAddress: string = '';
   copied: boolean = false;
+
   pack: any;
   copyAddres() {
     navigator.clipboard.writeText(this.walletAddress).then(() => {
@@ -43,6 +48,8 @@ export class DashboardComponent {
         console.log('packages',res);
         this.pack=res.data;
     });
+    // gteam
+  
   }
 
   getProfiledata(){
@@ -57,7 +64,28 @@ export class DashboardComponent {
       this.hdata=res.data;
     })
   }
-  
 
 
+  showScanner = false;
+  scannedResult: string | null = null;
+
+  allowedFormats = [BarcodeFormat.QR_CODE];
+
+  openqr() {
+    this.showScanner = true;
+  }
+
+  closeqr() {
+    this.showScanner = false;
+  }
+
+  onCodeResult(result: string) {
+    console.log('Scanned QR:', result);
+    this.scannedResult = result;
+
+    // Auto-close like PhonePe after scanning
+    this.showScanner = false;
+  }
 }
+
+

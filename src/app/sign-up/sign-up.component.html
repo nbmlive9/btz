@@ -59,15 +59,15 @@
     </div>
   </section>
   
-  <!-- Google Fonts -->
-  <!-- <button type="button" class="btn btn-primary"
-        data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Open Modal
-</button> -->
 
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content success-modal">
+      <div class="modal-content success-modal position-relative">
+        
+        <canvas id="confetti-canvas" 
+                class="position-absolute top-0 start-0 w-100 h-100" 
+                style="pointer-events: none;"></canvas>
+  
         <div class="modal-header border-0">
           <h5 class="modal-title fw-bold text-success">
             <i class="bi bi-check-circle-fill me-2"></i> Registration Successful
@@ -100,6 +100,7 @@
     </div>
   </div>
   
+  
   <style>
     /* Apply font globally to modal */
     .success-modal {
@@ -121,11 +122,11 @@
       padding: 20px;
     }
   
-    .details-card p {
+    /* .details-card p {
       margin: 8px 0;
       font-size: 15px;
       color: #333;
-    }
+    } */
   
     .details-card strong {
       color: #2c7a4b;
@@ -154,7 +155,6 @@
       }
     }
   </style>
-  
   
   
   <!-- Modal -->

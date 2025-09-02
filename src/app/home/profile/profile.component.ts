@@ -23,7 +23,7 @@ export class ProfileComponent implements OnInit {
       password: [''],
       email: [''],
       walletaddress: [''],
-      smartid:['']
+      regid:['']
     });
   }
 
@@ -48,7 +48,7 @@ export class ProfileComponent implements OnInit {
       password: '',
       walletaddress: this.pfdata.walletaddress,
       email: this.pfdata.email,
-      smartid:this.pfdata.smartid
+      regid:this.pfdata.regid
     });
   }
 
@@ -75,7 +75,7 @@ export class ProfileComponent implements OnInit {
         password:  this.pfdata.password,
         walletaddress: this.pfdata.walletaddress,
         email: this.pfdata.email,
-        smartid:this.pfdata.smartid
+        regid:this.pfdata.regid
       });
       this.form.disable(); 
     });

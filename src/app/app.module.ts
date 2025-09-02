@@ -6,6 +6,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { HttpClientModule } from '@angular/common/http';
+import { QRCodeModule } from 'angularx-qrcode';
+import { CommonModule } from '@angular/common';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+
+
 
 @NgModule({
   declarations: [
@@ -16,7 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule, HttpClientModule
+    ReactiveFormsModule, HttpClientModule,QRCodeModule,ZXingScannerModule,   
+    CommonModule        
   ],
   providers: [],
   bootstrap: [AppComponent]

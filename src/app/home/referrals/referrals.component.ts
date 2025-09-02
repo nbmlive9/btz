@@ -7,6 +7,7 @@ import { AuthUserService } from '../service/auth-user.service';
   styleUrls: ['./referrals.component.scss']
 })
 export class ReferralsComponent {
+  
 data1:any;
   constructor(private api:AuthUserService){}
 

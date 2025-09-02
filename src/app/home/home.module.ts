@@ -17,6 +17,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
 import { ReferralsComponent } from './referrals/referrals.component';
+import { QRCodeModule } from "angularx-qrcode";
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+
+
 
 
 
@@ -25,11 +29,12 @@ import { ReferralsComponent } from './referrals/referrals.component';
     HomeComponent,
     GTeamComponent,
     DashboardComponent,
-    FooterComponent, ProfileComponent, TransferAmountComponent, ReceiveComponent, DepositComponent, DirectTeamComponent, ReportComponent, BuyLiteComponent, BuyProComponent, BuyMaxComponent, ReferralsComponent
+    FooterComponent, ProfileComponent, TransferAmountComponent, ReceiveComponent, DepositComponent, DirectTeamComponent, ReportComponent, BuyLiteComponent, BuyProComponent, BuyMaxComponent, ReferralsComponent,
   ],
   imports: [
     CommonModule,
-    HomeRoutingModule, HttpClientModule, ReactiveFormsModule, FormsModule
-  ]
+    HomeRoutingModule, HttpClientModule, ReactiveFormsModule, FormsModule,
+    QRCodeModule,ZXingScannerModule
+]
 })
 export class HomeModule { }

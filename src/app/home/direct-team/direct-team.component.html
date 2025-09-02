@@ -10,12 +10,12 @@
   
   <div class="container mt-5">
     <h5 class="mb-3">Direct Team</h5>
-    
+  
     <div class="table-responsive">
       <table class="table table-bordered table-hover align-middle">
         <thead class="table-dark">
           <tr>
-            <th scope="col">s.no</th>
+            <th scope="col">S.No</th>
             <th scope="col">User ID</th>
             <th scope="col">Name</th>
             <th scope="col">Status</th>
@@ -23,34 +23,21 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>TXN123456</td>
-            <td>pasha</td>
-
-            <td><span class="badge bg-success">Completed</span></td>
-            <td>2025-08-26</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>TXN987654</td>
-            <td>pasha</td>
-
-            <td><span class="badge bg-warning text-dark">Pending</span></td>
-            <td>2025-08-25</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>TXN543210</td>
-            <td>pasha</td>
-
-            <td><span class="badge bg-danger">Failed</span></td>
-            <td>2025-08-24</td>
+          <tr *ngFor="let row of data1; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ row.regid }}</td>
+            <td>{{ row.name }}</td>
+            <td>
+              <span *ngIf="row.topupstatus == '1'" class="badge bg-success">Activated</span>
+              <span *ngIf="row.topupstatus == '0'" class="badge bg-danger">Not Activated</span>
+            </td>
+            <td>{{ row.adate }}</td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
+  
   
 
   <app-footer></app-footer>

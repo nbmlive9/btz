@@ -35,12 +35,12 @@ goBack() {
     });
   }
 
-  receiveddata(){
-    this.api.RecivedWalletReport().subscribe((res:any)=>{
+  receiveddata() {
+    this.api.RecivedWalletReport().subscribe((res: any) => {
       console.log(res);
-      this.rdata=res.data;
-      
-    })
+      this.rdata = res.data || []; // fallback to empty array
+    });
   }
+  
 
 }
