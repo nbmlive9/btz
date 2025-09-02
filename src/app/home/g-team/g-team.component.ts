@@ -14,7 +14,7 @@ export class GTeamComponent {
       console.log('gteam', res);
 
   
-      
+      // f
   
   })
 
