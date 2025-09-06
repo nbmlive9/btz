@@ -43,7 +43,6 @@ ngOnInit(){
     })
   }
 
-
   Transfer(){
       console.log(this.form.value);
       if (this.form.valid) {
