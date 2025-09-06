@@ -12,16 +12,16 @@ export class ReceiveComponent {
 
 rdata:any;
 pdata:any;
+  qrData: string = '';
   constructor(private location: Location, private api:AuthUserService) {}
 goBack() {
   this.location.back();
 }
 
-  walletAddress: string = 'TMjRqfsBJWATC57KwY2aRnHB7uc3f7Z5B';
   copied: boolean = false;
 
   copyAddress() {
-    navigator.clipboard.writeText(this.walletAddress).then(() => {
+    navigator.clipboard.writeText(this.pdata.regid).then(() => {
       this.copied = true;
       setTimeout(() => this.copied = false, 2000); // hide after 2 sec
     });
@@ -31,7 +31,8 @@ goBack() {
     this.receiveddata();
     this.api.Profile().subscribe((res:any)=>{
       console.log('profile',res)
-      this.pdata=res.data;
+      this.pdata=res.data[0];
+       this.qrData = this.pdata.regid;
     });
   }
 

@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { QRCodeModule } from 'angularx-qrcode';
 import { CommonModule } from '@angular/common';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { ReferralLinkShareComponent } from './referral-link-share/referral-link-share.component';
 
 
 
@@ -16,7 +17,8 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
   declarations: [
     AppComponent,
     LoginComponent,
-    SignUpComponent
+    SignUpComponent,
+    ReferralLinkShareComponent
   ],
   imports: [
     BrowserModule,

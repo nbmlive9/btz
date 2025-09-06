@@ -62,8 +62,7 @@ export class AuthUserService {
     email: string;
     password: string;
     name: string;
-    walletaddress: string;
-    regid:string;
+    wallet1: string;
   }) {
     const token1 = this.token.getToken();
     const httpOptions = {
@@ -78,8 +77,7 @@ export class AuthUserService {
         "email":value.email, 
         "password":value.password, 
         "name":value.name, 
-        "walletaddress":value.walletaddress, 
-        "regid":value.regid,
+        "wallet1":value.wallet1, 
       },
       httpOptions
     );
@@ -97,6 +95,21 @@ export class AuthUserService {
     AUTH_API + 'Directteam',
     httpOptions
   );   
+}
+
+ReferralsAllData(page: number, perPage: number) {
+    const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  }
+  const pageDetails = `page=${page}&per_page=${perPage}`;
+  return this.http.get(
+    AUTH_API + `Directteam?${pageDetails}`,
+    httpOptions
+  );
 }
 
 Activation(value: {
@@ -181,6 +194,22 @@ WalletReport(){
     AUTH_API + 'Wallet_Report',
     httpOptions
   );   
+}
+
+
+WalletReportLoad(page: number, perPage: number) {
+    const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  }
+  const pageDetails = `page=${page}&per_page=${perPage}`;
+  return this.http.get(
+    AUTH_API + `Wallet_Report?${pageDetails}`,
+    httpOptions
+  );
 }
 
 TransferWallet(value: {

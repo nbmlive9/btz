@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
+import { Component } from '@angular/core';
 import { AuthUserService } from '../service/auth-user.service';
+import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-report',
-  templateUrl: './report.component.html',
-  styleUrls: ['./report.component.scss']
+  selector: 'app-referrals-all-data',
+  templateUrl: './referrals-all-data.component.html',
+  styleUrls: ['./referrals-all-data.component.scss']
 })
-export class ReportComponent implements OnInit {
-  wdata: any;
+export class ReferralsAllDataComponent {
+
+   wdata: any;
   totalRecords: number = 0;
   page: number = 1;
   perPage: number = 20;
@@ -42,8 +43,10 @@ allData: any[] = [];
 
   this.loading = true;
 
-  this.api.WalletReportLoad(this.page, this.perPage).subscribe({
+  this.api.ReferralsAllData(this.page, this.perPage).subscribe({
     next: (res: any) => {
+      console.log(res);
+      
       const newData = res.data.data;
       if (newData.length > 0) {
         this.allData = [...this.allData, ...newData]; // keep all loaded data
@@ -82,7 +85,5 @@ applyDateFilter(): void {
     return true;
   });
 };
-
-
 
 }

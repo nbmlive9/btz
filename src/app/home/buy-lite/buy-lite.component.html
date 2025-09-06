@@ -10,6 +10,17 @@
   <!-- Title -->
   <h5 class="fw-bold text-dark mb-4 text-center">Bitraze Lite</h5>
 
+<!-- Error Toast -->
+<div class="position-fixed bottom-0 end-0 p-3">
+  <div class="toast align-items-center text-bg-danger border-0" role="alert" [ngClass]="{'show': showError, 'hide': !showError}" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body fw-bold">
+        {{ errorMessage }}
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" (click)="showError=false"></button>
+    </div>
+  </div>
+</div>
 
 
   <!-- Price Cards -->
@@ -35,7 +46,7 @@
 <main class="container my-4 mb-5">
   <div class="fw-bold mb-3">Purchase Transactions</div>
   <!-- <div class="vstack gap-3" *ngFor="let row of adata"> -->
-    <div class="vstack gap-3" *ngFor="let row of adata.slice().reverse()">
+    <div class="vstack gap-3" *ngFor="let row of adata?.slice().reverse(); else noTransactions">
 
     <div class="txn-card d-flex align-items-center p-3 rounded-3 shadow-sm  border-4">
       <div class="txn-icon me-3 fs-3 text-success"><i class="bi bi-person-circle"></i></div>
@@ -54,6 +65,11 @@
       </div>
     </div>
   </div>
+      <ng-template #noTransactions>
+      <div class="text-center text-muted py-4">
+        No transactions yet.
+      </div>
+    </ng-template>
 </main>
 
 <!-- Bootstrap Modal -->
@@ -98,6 +114,21 @@
     </div>
   </div>
 </div>
+
+<!-- Success Toast -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
+  <div class="toast align-items-center text-bg-success border-0" role="alert" [ngClass]="{'show': showSuccess, 'hide': !showSuccess}" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body fw-bold">
+        Your subscription has been successfully completed!
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" (click)="showSuccess=false"></button>
+    </div>
+  </div>
+</div>
+
+
+
 
 <app-footer></app-footer>
 

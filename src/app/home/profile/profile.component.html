@@ -8,34 +8,33 @@
     <main class="p-3 pb-5 mb-5">
       <form [formGroup]="form" (ngSubmit)="updateProfile()" class="profile-form shadow-sm p-4 rounded bg-white">
         <h5 class="mb-4 fw-bold text-primary">Edit Profile</h5>
-      
         <!-- Name -->
         <div class="mb-3">
           <label class="form-label fw-semibold">User Id</label>
-          <input type="text" formControlName="regid" readonly class="form-control" placeholder="Enter your name" />
+          <input type="text" [placeholder]="pfdata.regid" readonly class="form-control"  />
         </div>
 
         <div class="mb-3">
           <label class="form-label fw-semibold">Name</label>
-          <input type="text" formControlName="name" class="form-control" placeholder="Enter your name" />
+          <input type="text" [(ngModel)]="pfdata.name" formControlName="name" class="form-control"  />
         </div>
       
         <!-- Password -->
         <div class="mb-3">
           <label class="form-label fw-semibold">Password</label>
-          <input type="password" formControlName="password" class="form-control" placeholder="Enter new password" />
+          <input type="password" [(ngModel)]="pfdata.password" formControlName="password" class="form-control" placeholder="Enter new password" />
         </div>
       
         <!-- Wallet Address -->
         <div class="mb-3">
           <label class="form-label fw-semibold">Wallet Address</label>
-          <input type="text" formControlName="walletaddress" class="form-control" placeholder="Enter wallet address" />
+          <input type="text" [(ngModel)]="pfdata.wallet1" formControlName="wallet1" class="form-control"  />
         </div>
       
         <!-- Email -->
         <div class="mb-3">
           <label class="form-label fw-semibold">Email</label>
-          <input type="email" formControlName="email" class="form-control" placeholder="Enter your email" />
+          <input type="email" [(ngModel)]="pfdata.email" formControlName="email" class="form-control"  />
         </div>
       
         <!-- Buttons -->
@@ -97,7 +96,9 @@
         </a>
       </div> -->
 
-      <div style="height:90px"></div> <!-- spacer for bottom nav -->
+      <div class="text-center mb-2">
+      <button class="btn btn-danger btn-sm text-right" style="font-weight: 600;" (click)="signOut()"> <i class="pi pi-fw pi-sign-out"></i> Log Out </button>
+      </div> <!-- spacer for bottom nav -->
     </main>
   </div>
 

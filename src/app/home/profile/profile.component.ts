@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { AuthUserService } from '../service/auth-user.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { TokenStorageService } from '../service/token-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -16,14 +18,13 @@ export class ProfileComponent implements OnInit {
   constructor(
     private location: Location,
     private api: AuthUserService,
-    private fb: FormBuilder
+    private fb: FormBuilder, private token:TokenStorageService, private router:Router
   ) {
     this.form = this.fb.group({
       name: [''],
       password: [''],
       email: [''],
-      walletaddress: [''],
-      regid:['']
+      wallet1: ['']
     });
   }
 
@@ -34,6 +35,10 @@ export class ProfileComponent implements OnInit {
   Back() {
     this.location.back();
   }
+
+     signOut(): void {
+        this.token.signOut();
+        }
 
   enableEdit() {
     this.isEditing = true;
@@ -46,9 +51,8 @@ export class ProfileComponent implements OnInit {
     this.form.patchValue({
       name: this.pfdata.name,
       password: '',
-      walletaddress: this.pfdata.walletaddress,
-      email: this.pfdata.email,
-      regid:this.pfdata.regid
+      wallet1: this.pfdata.wallet1,
+      email: this.pfdata.email
     });
   }
 
@@ -59,6 +63,9 @@ export class ProfileComponent implements OnInit {
         console.log('Profile updated successfully', res);
         this.isEditing = false;
         this.form.disable(); // lock fields after saving
+         setTimeout(() => {
+              this.router.navigateByUrl('/profile'); // reload component
+            }, 500);
       },
       error: (err: any) => {
         console.error('Error updating profile', err);
@@ -73,9 +80,8 @@ export class ProfileComponent implements OnInit {
       this.form.patchValue({
         name: this.pfdata.name,
         password:  this.pfdata.password,
-        walletaddress: this.pfdata.walletaddress,
-        email: this.pfdata.email,
-        regid:this.pfdata.regid
+        wallet1: this.pfdata.wallet1,
+        email: this.pfdata.email
       });
       this.form.disable(); 
     });

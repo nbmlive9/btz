@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { AuthUserService } from '../service/auth-user.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-buy-lite',
   templateUrl: './buy-lite.component.html',
@@ -12,9 +13,12 @@ export class BuyLiteComponent {
   form: FormGroup;
   pack:any;
   pdata: any = {};
-
+row: any;
+ showSuccess: boolean = false;
+showError: boolean = false;
+errorMessage: string = '';
   //form1:FormGroup;
-  constructor(private location: Location, private api:AuthUserService, private fb:FormBuilder) {
+  constructor(private location: Location, private api:AuthUserService, private fb:FormBuilder, private router:Router) {
       this.form = this.fb.group({
       package: new FormControl('1'),
       regid: new FormControl(''),
@@ -24,25 +28,21 @@ export class BuyLiteComponent {
   this.location.back();
 }
 ngOnInit(){
-  this.getpackages();
-  //ActivationData
-  // this.api.ActivationData().subscribe((res:any)=>{
-  //   console.log(res);
-  //   this.adata=res.data;
-  // });
-  this.api.ActivationData().subscribe((res:any) => {
-    this.adata = res.data.sort((a:any, b:any) => {
-      return new Date(b.cdate).getTime() - new Date(a.cdate).getTime();
-    });
-  });
-  
-  //profile
-  this.api.Profile().subscribe((res:any) => {
-    this.pdata = res.data[0];
-    this.form.patchValue({ regid: this.pdata.regid });
-  });
-  
+  this.loadData();
+ 
 }
+
+  loadData() {
+    this.getpackages();
+    this.api.ActivationData().subscribe((res: any) => {
+      this.adata = res.data.sort((a: any, b: any) => new Date(b.cdate).getTime() - new Date(a.cdate).getTime());
+    });
+    this.api.Profile().subscribe((res: any) => {
+      this.pdata = res.data[0];
+      this.form.patchValue({ regid: this.pdata.regid });
+    });
+  }
+
 
 getpackages(){
   this.api.GetPackages().subscribe((res:any)=>{
@@ -64,11 +64,23 @@ submitAction() {
       this.api.Activation(val).subscribe(
         (res: any) => {
           console.log('Activation response:', res);
-          
           this.form.reset();
+             this.showSuccess = true;  // show success toast
+      this.showError = false;
+
+      setTimeout(() => {
+        this.showSuccess = false;
+        this.router.navigateByUrl('/bitraze-lite'); // reload component
+      }, 500);
         },
         (err: any) => {
           console.error('Activation error:', err);
+              this.errorMessage = err?.error?.message || 'Something went wrong!';
+      this.showError = true;
+
+      setTimeout(() => {
+        this.showError = false;
+      }, 500);
         }
       );
     } else if (this.pdata.topupstatus == '1') {
@@ -77,9 +89,18 @@ submitAction() {
         (res: any) => {
           console.log('Topup response:', res);
           this.form.reset();
+                   this.showSuccess = true;  // show success toast
+      this.showError = false;
+
+      setTimeout(() => {
+        this.showSuccess = false;
+        this.router.navigateByUrl('/bitraze-lite'); // reload component
+      }, 500);
         },
         (err: any) => {
           console.error('Topup error:', err);
+                this.errorMessage = err?.error?.message || 'Something went wrong!';
+      this.showError = true;
         }
       );
     }

@@ -3,6 +3,7 @@ import { AuthUserService } from '../service/auth-user.service';
 
 import { BarcodeFormat } from '@zxing/library';   // 👈 important
 
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +18,7 @@ export class DashboardComponent {
   copied: boolean = false;
 
   pack: any;
+
   copyAddres() {
     navigator.clipboard.writeText(this.walletAddress).then(() => {
       this.copied = true;
@@ -35,6 +37,7 @@ export class DashboardComponent {
     this.referrals = section === 'referrals';
   }
   wdata:any;
+   permissionDenied: boolean = false;
   constructor(private api:AuthUserService){}
 
   ngOnInit(){
@@ -65,27 +68,83 @@ export class DashboardComponent {
     })
   }
 
+ openSharePopup() {
+    const modalElement = document.getElementById('shareModal');
+    const modal = new bootstrap.Modal(modalElement!);
+    modal.show();
+  }
+
+  shareTo(platform: string) {
+    const regid = this.pfdata?.regid;
+    const message = `Welcome to Bitraze! 🚀 Join for free: https://bitraze.org/referral/${regid}`;
+    const encodedMessage = encodeURIComponent(message);
+
+    let url = '';
+
+    switch (platform) {
+      case 'whatsapp':
+        url = `https://api.whatsapp.com/send?text=${encodedMessage}`;
+        break;
+      case 'telegram':
+        url = `https://t.me/share/url?url=https://bitraze.org/referral/${regid}&text=${encodedMessage}`;
+        break;
+      case 'imo':
+        if (navigator.share) {
+          navigator.share({
+            title: 'Bitraze Invite',
+            text: message,
+            url: `https://bitraze.org/referral/${regid}`,
+          }).catch(err => console.error('Sharing failed:', err));
+          return;
+        } else {
+          alert('Sharing not supported on this device');
+          return;
+        }
+    }
+
+    window.open(url, '_blank');
+  }
 
   showScanner = false;
   scannedResult: string | null = null;
 
   allowedFormats = [BarcodeFormat.QR_CODE];
 
-  openqr() {
-    this.showScanner = true;
+openqr() {
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        this.showScanner = true;
+        this.permissionDenied = false;
+        // stop stream immediately if just checking permission
+        stream.getTracks().forEach(track => track.stop());
+      })
+      .catch(err => {
+        console.error('Camera permission denied:', err);
+        this.permissionDenied = true; // show manual input
+        alert('Camera access is required to scan QR codes. Please allow it in your browser.');
+      });
   }
+
 
   closeqr() {
     this.showScanner = false;
   }
 
-  onCodeResult(result: string) {
+   onCodeResult(result: string) {
     console.log('Scanned QR:', result);
     this.scannedResult = result;
 
-    // Auto-close like PhonePe after scanning
+    // Close scanner overlay
     this.showScanner = false;
+
+    // Show QR result modal
+    const modalElement = document.getElementById('qrResultModal');
+    const modal = new bootstrap.Modal(modalElement!);
+    modal.show();
   }
+
+
+
 }
 
 

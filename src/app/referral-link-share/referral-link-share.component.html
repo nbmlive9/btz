@@ -45,10 +45,10 @@
                 </div>
 
                 <div class="col-sm-6">
-                  <label class="form-label">Referral ID</label>
+                  <label class="form-label">Referral ID ({{data1?.name}})</label>
                   <div class="input-wrapper">
                     <i class="fas fa-key input-icon"></i>
-                    <input type="text" formControlName="sponcerid" placeholder="Enter referral ID" class="form-control" (keyup)="onRegisterIdSelect($event)">
+                    <input type="text" formControlName="sponcerid" placeholder="Enter referral ID" class="form-control" readonly>
                   </div>
                   <span class="text-success">{{ idselectmsg }}</span>
                   <span class="text-danger">{{ errorMessage }}</span>

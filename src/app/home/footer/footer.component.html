@@ -1,31 +1,31 @@
 <!-- Bottom Navigation (hidden on login & signup) -->
-<div *ngIf="!hideBottomNav()" 
-     class="bottom-nav bg-light d-flex justify-content-around py-2 border-top fixed-bottom">
-
+<div *ngIf="!hideBottomNav()" class="bottom-nav d-flex justify-content-around align-items-center shadow-lg">
   <a routerLink="/home" 
      routerLinkActive="active-link" 
      [routerLinkActiveOptions]="{ exact: true }"
-     class="text-center text-decoration-none">
-    <i class="bi bi-wallet2"></i><br>Assets
+     class="nav-item text-center">
+    <i class="bi bi-wallet2 fs-4"></i>
+    <span class="nav-label">Assets</span>
   </a>
 
   <a routerLink="/deposit" 
-  routerLinkActive="active-link" 
-  class="text-center text-decoration-none">
-  <i class="bi bi-cash-coin" style="font-size: 17px;"></i>
-  <br>Deposit
-</a>
-
+     routerLinkActive="active-link" 
+     class="nav-item text-center">
+    <i class="bi bi-cash-coin fs-4"></i>
+    <span class="nav-label">Deposit</span>
+  </a>
 
   <a routerLink="/team" 
      routerLinkActive="active-link" 
-     class="text-center text-decoration-none">
-     <i class="fa fa-users" aria-hidden="true"></i>
-     <br>Team
+     class="nav-item text-center">
+    <i class="bi bi-people fs-4"></i>
+    <span class="nav-label">Team</span>
   </a>
+
   <a routerLink="/profile" 
      routerLinkActive="active-link" 
-     class="text-center text-decoration-none">
-    <i class="bi bi-person"></i><br>Profile
+     class="nav-item text-center">
+    <i class="bi bi-person-circle fs-4"></i>
+    <span class="nav-label">Profile</span>
   </a>
 </div>

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './home/service/auth.guard';
+import { ReferralLinkShareComponent } from './referral-link-share/referral-link-share.component';
 
 const routes: Routes = [
   
@@ -17,6 +18,10 @@ const routes: Routes = [
    {
     path: 'sign',
     component: SignUpComponent
+  },
+     {
+    path: 'referral/:regid',
+    component: ReferralLinkShareComponent
   },
   {
     path: '',

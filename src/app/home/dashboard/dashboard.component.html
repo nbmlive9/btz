@@ -1,221 +1,308 @@
-<div class="wallet-container d-flex flex-column min-vh-100">
-    <!-- Header -->
-    <header class="wallet-header d-flex align-items-center justify-content-between px-3 py-2">
-        <!-- Left Side -->
-        <div class="d-flex flex-column">
-          <h6 class="m-0 fw-bold "> {{pfdata?.name}}  </h6>
-          <small class=" ">{{pfdata?.regid}}</small>
+<div class="wallet-container d-flex flex-column min-vh-100 bg-light">
+
+  <!-- HEADER -->
+  <header class="wallet-header shadow-sm d-flex align-items-center justify-content-between px-3 py-2 bg-white rounded-bottom">
+    <div class="d-flex flex-column">
+      <h6 class="m-0 fw-bold">{{ pfdata?.name }}</h6>
+      <small class="text-muted">{{ pfdata?.regid }}</small>
+    </div>
+    <img src="assets/favicon.png" alt="Logo" class="header-logo">
+    <div class="d-flex align-items-center gap-3">
+      <i class="bi bi-qr-code-scan fs-3 cursor-pointer" (click)="openqr()"></i>
+      <i class="bi bi-share fs-3 cursor-pointer text-primary" (click)="openSharePopup()"></i>
+    </div>
+
+<!-- SHARE POPUP MODAL -->
+<div class="modal fade" id="shareModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 shadow-lg border-0">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold text-dark">Share Referral Link</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <p class="text-muted small mb-4 text-center">
+          Share your referral link with friends and earn rewards!
+        </p>
+
+        <div class="d-flex justify-content-around">
+          <!-- WhatsApp -->
+          <div class="share-icon" (click)="shareTo('whatsapp')">
+            <i class="bi bi-whatsapp"></i>
+            <span>WhatsApp</span>
+          </div>
+
+          <!-- Telegram -->
+          <div class="share-icon" (click)="shareTo('telegram')">
+            <i class="bi bi-telegram"></i>
+            <span>Telegram</span>
+          </div>
+
+          <!-- IMO -->
+          <div class="share-icon" (click)="shareTo('imo')">
+            <img src="assets/imo.png" alt="IMO" />
+            <span>IMO</span>
+          </div>
         </div>
-        <!-- Center -->
-        <h6 class="m-0 fw-bold ">
-          <img src="assets/favicon.png" alt="">
-        </h6>
-    
-        <!-- Right Side -->
-        <div class="d-flex align-items-center gap-3 " >
-          <!-- <i class="bi bi-qr-code-scan" (click)="openqr()"></i> -->
-<!-- QR Icon -->
-<!-- QR Icon -->
-<i class="bi bi-qr-code-scan fs-2 cursor-pointer" (click)="openqr()"></i>
+      </div>
 
-<!-- Fullscreen scanner overlay -->
-<div *ngIf="showScanner" class="scanner-overlay">
-  <div class="scanner-container">
-    <zxing-scanner
-      [formats]="allowedFormats"
-      (scanSuccess)="onCodeResult($event)">
-    </zxing-scanner>
+      <div class="modal-footer border-0">
+        <button class="btn btn-secondary w-100 rounded-pill" data-bs-dismiss="modal">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+  </header>
 
-    <!-- Close button -->
-    <button class="btn btn-danger close-btn" (click)="closeqr()">✕</button>
+  
+    <!-- CONGRATULATION STAKING BANNER -->
+<div class="staking-banner mx-3 my-3 p-3 rounded-4 shadow-lg d-flex justify-content-between align-items-center">
+  <div class="banner-text">
+    <p class="mb-0">{{ pfdata?.tcoins}} <span class="small">BTZ</span></p>
+  </div>
+  <div class="banner-amount text-end">
+    <h6 class="fw-bold text-white">Staking token</h6>
   </div>
 </div>
 
-<!-- Show scanned result -->
-<div *ngIf="scannedResult" class="alert alert-success mt-3">
-  ✅ Scanned: {{ scannedResult }}
+  <!-- WALLET BALANCE CARD -->
+  <div class="card balance-card mx-3 mt-1 shadow-lg">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h6 class="text-white fw-bold"><i class="bi bi-wallet2 me-1"></i> Wallet Asset</h6>
+        <small class="btn btn-sm btn-light text-success fw-semibold">Go to Withdraw <i class="bi bi-arrow-right"></i></small>
+      </div>
+      <h4 class="fw-bold text-white d-flex align-items-center">{{ pfdata?.walletamount | currency:'USD':'symbol':'1.0-2' }} </h4>
+      <p class="text-white mb-1">{{ pfdata?.actwallet | currency:'USD':'symbol':'1.0-2' }} P2P</p>
+      <!-- <small class="text-white fw-bold">{{ pfdata?.wallet1 }}
+        <i class="fa fa-clone ms-2" style="cursor:pointer;" (click)="copyAddres()"></i>
+      </small> -->
+      <p *ngIf="copied" class="text-white mt-1">Copied!</p>
+      <div class="d-flex justify-content-between mt-3 text-white">
+        <div><small>Staking Bonus</small><br>{{ hdata?.dailyincome | currency:'USD':true:'1.0-2' }} btz</div>
+        <div><small>My Referrals</small><br><i class="fa fa-user"></i> {{ hdata?.sponsors }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROMO BANNER -->
+  <div class="promo-banner mx-3 mt-3 d-flex justify-content-between align-items-center shadow-sm">
+    <div class="promo-text">
+      <h6>Welcome bonus for each $1 get 100btz Tokens</h6>
+      <a routerLink="/dashboard">Explore Now →</a>
+    </div>
+    <div class="promo-img">
+    </div>
+  </div>
+    <div class="container">
+      <div class="">
+        <button class="btn btn-outline-primary btn-sm mt-2 w-100 fw-bold" data-bs-toggle="modal" data-bs-target="#gIncomeModal">
+  View G-Team Incomes
+</button>
+      </div>
+    </div>
+  <!-- QUICK ACTIONS SCROLLER -->
+  <div class="container mt-3">
+    <div class="d-flex flex-nowrap overflow-auto hide-scrollbar">
+      <div class="scroll-item text-center" routerLink="/transfer">
+        <i class="bi bi-box-arrow-up-right fs-4"></i>
+        <p class="mt-1 small">Send</p>
+      </div>
+      <div class="scroll-item text-center" routerLink="/receive">
+        <i class="bi bi-arrow-down-square fs-4"></i>
+        <p class="mt-1 small">Receive</p>
+      </div>
+         <div class="scroll-item text-center" routerLink="/selftransfer">
+        <i class="bi bi-arrow-repeat fs-4"></i>
+        <p class="mt-1 small">Transfer</p>
+      </div>
+      <div class="scroll-item text-center">
+        <i class="bi bi-check-square fs-4"></i>
+        <p class="mt-1 small">Stake</p>
+      </div>
+      <div class="scroll-item text-center" routerLink="/report">
+        <i class="bi bi-file-earmark-text fs-4"></i>
+        <p class="mt-1 small">Reports</p>
+      </div>
+    </div>
+  </div>
+
+<div class="container mt-3">
+  <h5 class="fw-bold mb-2">Investment Plans</h5>
+  <div class="d-flex overflow-auto hide-scrollbar gap-3 py-2">
+    
+    <!-- Card 1: Bitraze Lite -->
+    <div class="investment-card card-lite flex-shrink-0 p-3 rounded-4 shadow-sm text-white text-center" style="width: 250px;">
+      <h5 class="fw-bold mb-2">Bitraze Lite</h5>
+      <p class="mb-2">0.5% Daily Bonus</p>
+      <div class="join-amount mb-3">
+        <span class="amount">$10</span>
+        <span class="amount">$25</span>
+        <span class="amount">$50</span>
+      </div>
+      <button class="btn btn-light btn-sm fw-bold" routerLink="/bitraze-lite">Buy Now</button>
+    </div>
+
+    <!-- Card 2: Bitraze Pro -->
+    <div class="investment-card card-pro flex-shrink-0 p-3 rounded-4 shadow-sm text-white text-center" style="width: 250px;">
+      <h5 class="fw-bold mb-2">Bitraze Pro</h5>
+      <p class="mb-2">0.6% Daily Bonus</p>
+      <div class="join-amount mb-3">
+        <span class="amount">$100</span>
+        <span class="amount">$250</span>
+        <span class="amount">$500</span>
+      </div>
+      <button class="btn btn-light btn-sm fw-bold" routerLink="/bitraze-lite">Buy Now</button>
+    </div>
+
+    <!-- Card 3: Bitraze Max -->
+    <div class="investment-card card-max flex-shrink-0 p-3 rounded-4 shadow-sm text-white text-center" style="width: 250px;">
+      <h5 class="fw-bold mb-2">Bitraze Max</h5>
+      <p class="mb-2">0.7% Daily Bonus</p>
+      <div class="join-amount mb-3">
+        <span class="amount">$1000</span>
+        <span class="amount">$2500</span>
+        <span class="amount">$5000</span>
+        <span class="amount">$10000</span>
+      </div>
+      <button class="btn btn-light btn-sm fw-bold" routerLink="/bitraze-lite">Buy Now</button>
+    </div>
+
+  </div>
 </div>
 
 
+<!-- ASSETS / REFERRALS / G TEAM TOGGLE -->
+<div class="container mt-3">
+  <div class="d-flex justify-content-between toggle-btn-group shadow-sm">
+    <button class="toggle-btn" [ngClass]="{'active': setassets}" (click)="showSection('setassets')">
+      Assets
+    </button>
+    <button class="toggle-btn" [ngClass]="{'active': referrals}" (click)="showSection('referrals')">
+      Referrals
+    </button>
+    <button class="toggle-btn" [ngClass]="{'active': glevel}" (click)="showSection('glevel')">
+      G Team
+    </button>
+  </div>
+</div>
 
-          <i class="bi bi-plus-circle fs-5"></i>
-        </div>
-      </header>
-      
-    <!-- Balance Card -->
-    <div class="card balance-card mx-3 mt-2 shadow-sm">
-        <div class="card-body">
-            <!-- <div class="d-flex justify-content-between">
-                <h6 class="text-white fw-bold"><i class="bi bi-wallet2"></i> Wallet Asset</h6>
-                <small class=" p-0 " style="background-color: white; color: green;"> Go to Withdraw <i
-                        class="bi bi-arrow-right  mt-2"></i>
-                </small>
-            </div> -->
-            <div class="d-flex justify-content-between align-items-center">
-                <h6 class="text-white fw-bold mb-0">
-                  <i class="bi bi-wallet2"></i> Wallet Asset
-                </h6>
-                
-                <small class="px-2 py-1 rounded text-success bg-white fw-semibold" style="cursor:pointer; font-size: 10px;">
-                  Go to Withdraw <i class="bi bi-arrow-right"></i>
-                </small>
-              </div>
-              <h3 class="fw-bold">
-                {{ pfdata?.walletamount | currency:'USD':'symbol':'1.0-2' }}
-              </h3>
-              <p class="mb-1">
-                {{ pfdata?.actwallet | currency:'USD':'symbol':'1.0-2' }} P2P
-              </p>
-              
-            <small class="text-white fw-bold "> {{pfdata?.wallet1}} <i class="fa fa-clone ms-2" aria-hidden="true"
-                    style="cursor: pointer;" (click)="copyAddres()"></i>
-            </small>
-
-
-            <p *ngIf="copied" class="text-white">Copied!</p>
-
-            <div class="d-flex justify-content-between mt-3">
-                <div><small>Staking Bonus </small><br> {{hdata?.dailyincome | currency:'USD':true:'1.0-2'}} btz</div>
-                <div><small>My Referrals</small><br><i class="fa fa-user"></i> {{hdata?.sponsors}} </div>
-            </div>
-        </div>
-    </div>
-    <div class="container mt-3">
-        <div class="promo-banner">
-            <!-- Left Side Text -->
-            <div class="promo-text">
-                <h6>75% off USDT Transfer Fees with GasFree, No TRX Needed, Fast Delivery!</h6>
-                <a routerLink="/dashboard" style="cursor: pointer;">Explore Now →</a>
-            </div>
-
-            <!-- Right Side Image -->
-            <div class="promo-img">
-                <img src="https://cdn-icons-png.flaticon.com/512/1041/1041882.png" alt="promo">
-            </div>
-        </div>
-    </div>
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-12">
-                <div class="d-flex flex-nowrap overflow-auto hide-scrollbar">
-                    <div class="scroll-item text-center">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                        <p class="mt-2" routerLink="/transfer" >send</p>
-                    </div>
-                    <div class="scroll-item text-center">
-                        <!-- <i class="fa-solid fa-arrow-down"></i> -->
-                        <i class="bi bi-arrow-down-square"></i>
-                        <p class="mt-2" routerLink="/receive"> Receive</p>
-                    </div>
-                    <div class="scroll-item text-center">
-                        <i class="bi bi-check-square mt-2"></i>
-                        <p class="mt-2">Stake</p>
-                    </div>
-                    <div class="scroll-item text-center">
-                        <i class="fa-solid fa-file-lines"></i>
-                        <p class="mt-2" routerLink="/report">Reports</p>
-                    </div>
-                    <div class="scroll-item text-center">
-                        <i class="fa fa-gift" aria-hidden="true"></i>
-
-                        <p class="mt-2">Rewards</p>
-                    </div>
-                    <div class="scroll-item text-center">
-                        <i class="bi bi-check-square mt-2"></i>
-                        <p class="mt-2">receive</p>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container mt-3">
-        <div class="row">
-            <div class="col-4">
-                <img src="assets/card1.jpg" routerLink="/bitraze-lite" class="img-fluid" alt="">
-            </div>     
-            <div class="col-4">
-                <img src="assets/card1.jpg" routerLink="/bitraze-pro" class="img-fluid" alt="">
-            </div>     
-            <div class="col-4">
-                <img src="assets/card1.jpg" routerLink="/bitraze-max" class="img-fluid" alt="">
-            </div>
-        </div>
-
-    </div>
-    <div class="container p-4">
-        <div class="row">
-            <div class="col-4">
-                <button class="btn fw-bold p-0 " style="color: blue; cursor: pointer;"  (click)="showSection('setassets')">
-                    Assets
-                </button>
-            </div>
-            <div class="col-4">
-                <button class="btn  fw-bold p-0" style="color: blue; cursor: pointer;"    (click)="showSection('referrals')">
-                    Referrals
-                </button>
-            </div>
-
-            <div class="col-4 text-end">
-                <button class="btn  fw-bold p-0" style="color: blue; cursor: pointer;"    (click)="showSection('glevel')">
-                    G team
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Assets View -->
-    <div class="mb-5 my-4" *ngIf="setassets">
-        <main class="container my-4 mb-5">
-          <div class="fw-bold mb-3">Recent Transactions</div>
-      
-          <div class="vstack gap-3" *ngFor="let wd of wdata">
-            <div class="txn-card d-flex align-items-center p-3 rounded-3 shadow-sm border-4">
-              
-              <!-- Icon -->
-              <div class="txn-icon me-3 fs-3 text-primary">
-                <i class="bi bi-person"></i>
-              </div>
-      
-              <!-- Content -->
-              <div class="flex-grow-1">
-                <div class="d-flex justify-content-between">
-                  <div class="txn-title fw-semibold">{{ wd.remark }}</div>
-                  <div class="txn-amt fw-bold" 
-                       [ngClass]="wd.amount >= 0 ? 'text-success' : 'text-danger'">
-                    {{ wd.amount | currency:'USD':true:'1.0-2' }}
-                  </div>
-                </div>
-      
-                <div class="d-flex justify-content-between align-items-center small text-muted">
-                  <div class="txn-sub">{{ wd.cdate | date:'dd/MM/YYYY' }}</div>
-                  <span class="badge rounded-pill"
-                        [ngClass]="wd.amount >= 0 ? 'bg-success' : 'bg-danger'">
-                    {{ wd.amount >= 0 ? 'Credit' : 'Debit' }}
-                  </span>
-                </div>
-              </div>
-      
-            </div>
+<div class="mb-5">
+  <!-- TRANSACTIONS VIEW -->
+  <div class="container mt-3 mb-5" *ngIf="setassets">
+    <div class="fw-bold mb-2 fs-5">Recent Transactions</div>
+    <div class="vstack gap-3">
+      <div *ngFor="let wd of wdata" class="txn-card shadow-sm p-3 d-flex align-items-center rounded-3">
+        <div class="txn-icon me-3"><i class="bi bi-person fs-4"></i></div>
+        <div class="flex-grow-1 d-flex justify-content-between align-items-center">
+          <div>
+            <div class="fw-semibold">Level {{ wd.level }} Credit</div>
+            <div class="text-muted small">{{ wd.cdate | date:'dd/MM/yyyy' }}</div>
           </div>
-        </main>
+          <div class="text-end">
+            <div [ngClass]="wd.amount >= 0 ? 'text-success fw-bold' : 'text-danger fw-bold'">
+              {{ wd.amount | currency:'USD':'symbol':'1.0-2' }}
+            </div>
+            <span class="badge rounded-pill mt-1 px-3 py-1"
+                  [ngClass]="wd.amount >= 0 ? 'bg-success bg-opacity-10 text-success' : 'bg-danger bg-opacity-10 text-danger'">
+              {{ wd.amount >= 0 ? 'Credit' : 'Debit' }}
+            </span>
+          </div>
+        </div>
       </div>
+    </div>
+  </div>
+
+  <!-- REFERRALS AND GTEAM COMPONENTS -->
+  <div *ngIf="referrals"><app-referrals></app-referrals></div>
+  <div *ngIf="glevel"><app-g-team></app-g-team></div>
+
+</div>
+
+  <app-footer></app-footer>
+
+  <!-- QR SCANNER OVERLAY -->
+  <!-- <div *ngIf="showScanner" class="scanner-overlay">
+    <div class="scanner-container">
+      <zxing-scanner [formats]="allowedFormats" (scanSuccess)="onCodeResult($event)"></zxing-scanner>
+      <button class="btn btn-danger close-btn" (click)="closeqr()">✕</button>
+    </div>
+  </div>
+</div> -->
+
+<div *ngIf="!showScanner && permissionDenied">
+  <input type="text" [(ngModel)]="scannedResult" placeholder="Enter QR ID manually" />
+</div>
+
+<!-- SCANNED QR RESULT MODAL -->
+<div class="modal fade" id="qrResultModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 shadow-lg border-0">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold text-dark">Scanned QR Code</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body text-center">
+        <p class="fw-semibold">QR Code ID:</p>
+        <h5 class="text-primary">{{ scannedResult }}</h5>
+      </div>
+      <div class="modal-footer border-0">
+        <button class="btn btn-secondary w-100 rounded-pill" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- G-Level Incomes Modal -->
+<div class="modal fade" id="gIncomeModal" tabindex="-1" aria-labelledby="gIncomeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content rounded-4 shadow-lg border-0">
       
-    
+      <!-- Modal Header -->
+      <div class="modal-header bg-gradient-blue text-white rounded-top-4">
+        <h5 class="modal-title fw-bold" id="gIncomeModalLabel">G-Team Incomes</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
 
+      <!-- Modal Body -->
+      <div class="modal-body p-3">
+        <div class="d-flex flex-column gap-2">
+          <div class="d-flex justify-content-between align-items-center p-2 rounded-3 shadow-sm bg-light">
+            <span class="fw-semibold">G1 Income</span>
+            <span class="badge bg-success">{{ hdata?.G1income | currency:'USD':'symbol':'1.0-2' }}</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center p-2 rounded-3 shadow-sm bg-light">
+            <span class="fw-semibold">G2 Income</span>
+            <span class="badge bg-success">{{ hdata?.G2income | currency:'USD':'symbol':'1.0-2' }}</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center p-2 rounded-3 shadow-sm bg-light">
+            <span class="fw-semibold">G3 Income</span>
+            <span class="badge bg-success">{{ hdata?.G3income | currency:'USD':'symbol':'1.0-2' }}</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center p-2 rounded-3 shadow-sm bg-light">
+            <span class="fw-semibold">G4 Income</span>
+            <span class="badge bg-success">{{ hdata?.G4income | currency:'USD':'symbol':'1.0-2' }}</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center p-2 rounded-3 shadow-sm bg-light">
+            <span class="fw-semibold">G5 Income</span>
+            <span class="badge bg-success">{{ hdata?.G5income | currency:'USD':'symbol':'1.0-2' }}</span>
+          </div>
+        </div>
+      </div>
 
+      <!-- Modal Footer -->
+      <div class="modal-footer border-0">
+        <button class="btn btn-secondary w-100 rounded-pill" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
 
-
-
-
-
-    <div *ngIf="referrals" class="mb-5">
-        <app-referrals></app-referrals>
     </div>
-    <!-- G Team View -->
-    <div *ngIf="glevel">
-        <app-g-team></app-g-team>
-    </div>
-
-    <app-footer></app-footer>
+  </div>
+</div>

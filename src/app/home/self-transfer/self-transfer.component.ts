@@ -1,16 +1,17 @@
 import { Component } from '@angular/core';
-import { Location } from '@angular/common';   // ✅ Correct import
-import { AuthUserService } from '../service/auth-user.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthUserService } from '../service/auth-user.service';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-transfer-amount',
-  templateUrl: './transfer-amount.component.html',
-  styleUrls: ['./transfer-amount.component.scss']
+  selector: 'app-self-transfer',
+  templateUrl: './self-transfer.component.html',
+  styleUrls: ['./self-transfer.component.scss']
 })
-export class TransferAmountComponent {
-  pfdata:any;
+export class SelfTransferComponent {
+
+    pfdata:any;
     idselectmsg: string = '';
   regname:any;
     errorMessage = '';
@@ -19,7 +20,6 @@ export class TransferAmountComponent {
       qrCodeValue: string = '';
   constructor(private location: Location, private api:AuthUserService, private fb:FormBuilder, private route:ActivatedRoute) {
      this.form = this.fb.group({
-          regid: new FormControl('', [Validators.required]),
           amount: new FormControl('', [Validators.required]),
         });
   }
@@ -28,13 +28,6 @@ export class TransferAmountComponent {
 }
 
 ngOnInit(){
-   // Get QR Code value from URL
-    this.qrCodeValue = this.route.snapshot.paramMap.get('id') || '';
-    if (this.qrCodeValue) {
-      this.form.patchValue({ regid: this.qrCodeValue });
-    }
-
-
   this.getProfiledata();
   this.api.TransferWalletReport().subscribe((res:any)=>{
      console.log('transfer',res);
@@ -49,38 +42,14 @@ ngOnInit(){
     })
   }
 
-    onRegisterIdSelect(event: any) {
-    const id = event.target.value;
-    this.api.UserNameDisplay(id).subscribe(
-      (res4: any) => {
-        if (res4) {
-          console.log(res4);
-          this.regname = res4.data[0];
-          this.idselectmsg = `User Name: ${this.regname.name}`;
-          this.errorMessage = ''; // Reset the error message when data is correct
-        } else {
-          console.log(res4);
-          this.regname = null; // Reset the regname object when data is incorrect
-          this.errorMessage = 'Error fetching user data';
-          this.idselectmsg = 'User Not Available';
-        }
-      },
-      (err: any) => {
-        this.errorMessage = err.error.message;
-        this.regname = null; // Reset the regname object when there's an error
-        this.idselectmsg = '';
-      }
-    );
-  }
 
   Transfer(){
       console.log(this.form.value);
       if (this.form.valid) {
         const val = {
-          regid: this.form.value.regid,
           amount: this.form.value.amount,
         };
-        this.api.TransferWallet(val).subscribe(
+        this.api.SelfTransferWallet(val).subscribe(
           (a:any) => {
             if (a) {
               console.log(a);
@@ -99,5 +68,5 @@ ngOnInit(){
       }
     }
 
-
+  
 }

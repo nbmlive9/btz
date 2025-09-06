@@ -9,13 +9,13 @@
             <h6 class="text-muted">Scan the QR Code and Pay</h6>
             <!-- QR Code -->
             <div class="qr-box">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TMjRqfsBJWATC57KwY2aRnHB7uc3f7Z5B"
-                    alt="QR Code" class="img-fluid">
+                <qrcode [qrdata]="qrData" [width]="200"  [errorCorrectionLevel]="'M'" class="shadow rounded-3">
+                </qrcode>
             </div>
             <!-- Wallet -->
             <h5>Wallet <span class="badge bg-light text-dark">General Address</span></h5>
             <div class="wallet-address">
-              {{ walletAddress }}
+              {{ pdata.regid }}
               <i class="fa fa-clone ms-2" aria-hidden="true"
                  style="cursor: pointer;"
                  (click)="copyAddress()"></i>
@@ -74,7 +74,7 @@
       </div>
     
       <ng-template #noData>
-        <div class="txn-card text-center " style="background:#fdf2f2; color:#d32f2f;">
+        <div class="txn-card text-center mb-5" style="background:#fdf2f2; color:#d32f2f;">
           <div class="w-100 fw-bold">No transactions found</div>
         </div>
       </ng-template>
