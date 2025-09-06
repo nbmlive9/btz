@@ -31,3 +31,15 @@
 .txn-sub{ font-size:.85rem; color:#6b6b6b; }
 .txn-amt{ font-weight:700; }
 .badge-success{ background:rgba(26,168,75,.12); color:#1aa84b; }
+
+.input-group .btn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+zxing-scanner {
+  width: 100%;
+  max-height: 300px;
+  display: block;
+  margin: 0 auto;
+}

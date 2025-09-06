@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { AuthUserService } from '../service/auth-user.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+declare var bootstrap: any;
 @Component({
   selector: 'app-buy-lite',
   templateUrl: './buy-lite.component.html',
@@ -16,6 +17,7 @@ export class BuyLiteComponent {
 row: any;
  showSuccess: boolean = false;
 showError: boolean = false;
+    successMessage: string = '';
 errorMessage: string = '';
   //form1:FormGroup;
   constructor(private location: Location, private api:AuthUserService, private fb:FormBuilder, private router:Router) {
@@ -65,22 +67,22 @@ submitAction() {
         (res: any) => {
           console.log('Activation response:', res);
           this.form.reset();
-             this.showSuccess = true;  // show success toast
-      this.showError = false;
+          this.successMessage = '✅ Package Purchased successfully!';
+            this.errorMessage = '';
 
       setTimeout(() => {
         this.showSuccess = false;
         this.router.navigateByUrl('/bitraze-lite'); // reload component
-      }, 500);
+      }, 1000);
         },
         (err: any) => {
           console.error('Activation error:', err);
-              this.errorMessage = err?.error?.message || 'Something went wrong!';
-      this.showError = true;
+                this.successMessage = '';
+          this.errorMessage = '❌ Package Purchased failed. Please try again.';
 
       setTimeout(() => {
         this.showError = false;
-      }, 500);
+      }, 1000);
         }
       );
     } else if (this.pdata.topupstatus == '1') {
@@ -89,18 +91,23 @@ submitAction() {
         (res: any) => {
           console.log('Topup response:', res);
           this.form.reset();
-                   this.showSuccess = true;  // show success toast
-      this.showError = false;
-
-      setTimeout(() => {
-        this.showSuccess = false;
-        this.router.navigateByUrl('/bitraze-lite'); // reload component
-      }, 500);
+            this.successMessage = '✅ Package Purchased successfully!';
+            this.errorMessage = '';
+              setTimeout(() => {
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/bitraze-lite']);
+        });
+      }, 2000);
         },
         (err: any) => {
           console.error('Topup error:', err);
-                this.errorMessage = err?.error?.message || 'Something went wrong!';
-      this.showError = true;
+          this.successMessage = '';
+          this.errorMessage = '❌ Package Purchased failed. Please try again.';
+            setTimeout(() => {
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/bitraze-lite']);
+        });
+      }, 2000);
         }
       );
     }

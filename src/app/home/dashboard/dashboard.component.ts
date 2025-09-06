@@ -105,43 +105,6 @@ export class DashboardComponent {
     window.open(url, '_blank');
   }
 
-  showScanner = false;
-  scannedResult: string | null = null;
-
-  allowedFormats = [BarcodeFormat.QR_CODE];
-
-openqr() {
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(stream => {
-        this.showScanner = true;
-        this.permissionDenied = false;
-        // stop stream immediately if just checking permission
-        stream.getTracks().forEach(track => track.stop());
-      })
-      .catch(err => {
-        console.error('Camera permission denied:', err);
-        this.permissionDenied = true; // show manual input
-        alert('Camera access is required to scan QR codes. Please allow it in your browser.');
-      });
-  }
-
-
-  closeqr() {
-    this.showScanner = false;
-  }
-
-   onCodeResult(result: string) {
-    console.log('Scanned QR:', result);
-    this.scannedResult = result;
-
-    // Close scanner overlay
-    this.showScanner = false;
-
-    // Show QR result modal
-    const modalElement = document.getElementById('qrResultModal');
-    const modal = new bootstrap.Modal(modalElement!);
-    modal.show();
-  }
 
 
 

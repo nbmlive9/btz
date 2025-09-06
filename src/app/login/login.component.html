@@ -3,6 +3,12 @@
 <section style="  background: url('assets/back.jpg') no-repeat center/cover;
 ">
   <div class="form-box">
+   <div *ngIf="successMessage" class="alert alert-success text-center">
+            {{ successMessage }}
+          </div>
+          <div *ngIf="errorMessage" class="alert alert-danger text-center">
+            {{ errorMessage }}
+          </div>
     <form [formGroup]="form" (submit)="onSubmit()" novalidate>
       <h2>Member Login</h2>
       <div class="inputbox">

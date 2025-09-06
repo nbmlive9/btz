@@ -21,6 +21,7 @@ import { QRCodeModule } from "angularx-qrcode";
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { ReferralsAllDataComponent } from './referrals-all-data/referrals-all-data.component';
 import { SelfTransferComponent } from './self-transfer/self-transfer.component';
+import { ReferralLinkShareComponent } from './referral-link-share/referral-link-share.component';
 
 
 
@@ -31,7 +32,7 @@ import { SelfTransferComponent } from './self-transfer/self-transfer.component';
     HomeComponent,
     GTeamComponent,
     DashboardComponent,
-    FooterComponent, ProfileComponent, TransferAmountComponent, ReceiveComponent, DepositComponent, DirectTeamComponent, ReportComponent, BuyLiteComponent, BuyProComponent, BuyMaxComponent, ReferralsComponent, ReferralsAllDataComponent, SelfTransferComponent,
+    FooterComponent, ProfileComponent, TransferAmountComponent, ReceiveComponent, DepositComponent, DirectTeamComponent, ReportComponent, BuyLiteComponent, BuyProComponent, BuyMaxComponent, ReferralsComponent, ReferralsAllDataComponent, SelfTransferComponent, ReferralLinkShareComponent,
   ],
   imports: [
     CommonModule,

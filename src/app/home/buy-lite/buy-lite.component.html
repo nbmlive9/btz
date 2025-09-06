@@ -9,7 +9,12 @@
 
   <!-- Title -->
   <h5 class="fw-bold text-dark mb-4 text-center">Bitraze Lite</h5>
-
+   <div *ngIf="successMessage" class="alert alert-success text-center">
+            {{ successMessage }}
+          </div>
+          <div *ngIf="errorMessage" class="alert alert-danger text-center">
+            {{ errorMessage }}
+          </div>
 <!-- Error Toast -->
 <div class="position-fixed bottom-0 end-0 p-3">
   <div class="toast align-items-center text-bg-danger border-0" role="alert" [ngClass]="{'show': showError, 'hide': !showError}" aria-live="assertive" aria-atomic="true">
@@ -115,17 +120,7 @@
   </div>
 </div>
 
-<!-- Success Toast -->
-<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
-  <div class="toast align-items-center text-bg-success border-0" role="alert" [ngClass]="{'show': showSuccess, 'hide': !showSuccess}" aria-live="assertive" aria-atomic="true">
-    <div class="d-flex">
-      <div class="toast-body fw-bold">
-        Your subscription has been successfully completed!
-      </div>
-      <button type="button" class="btn-close btn-close-white me-2 m-auto" (click)="showSuccess=false"></button>
-    </div>
-  </div>
-</div>
+
 
 
 

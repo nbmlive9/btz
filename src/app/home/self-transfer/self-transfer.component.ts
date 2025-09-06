@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthUserService } from '../service/auth-user.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
@@ -14,11 +14,12 @@ export class SelfTransferComponent {
     pfdata:any;
     idselectmsg: string = '';
   regname:any;
-    errorMessage = '';
     form:FormGroup;
     tdata:any;
       qrCodeValue: string = '';
-  constructor(private location: Location, private api:AuthUserService, private fb:FormBuilder, private route:ActivatedRoute) {
+          successMessage: string = '';
+errorMessage: string = '';
+  constructor(private location: Location, private api:AuthUserService, private fb:FormBuilder, private route:ActivatedRoute, private router:Router) {
      this.form = this.fb.group({
           amount: new FormControl('', [Validators.required]),
         });
@@ -54,11 +55,23 @@ ngOnInit(){
             if (a) {
               console.log(a);
                  this.form.reset();
+                  this.successMessage = 'Successfully Transfer Amount';
+          this.errorMessage = '';
+            setTimeout(() => {
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/selftransfer']);
+        });
+      }, 2000);
             } else {
               console.log(a);
                this.form.markAllAsTouched();
-              // this.errorMessage = a.msg.message;
-              // this.mymsg = 'Profile Successfully Updated !!!';
+              this.successMessage = '';
+          this.errorMessage = '❌ Self Transfer failed. Please try again.';
+            setTimeout(() => {
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/selftransfer']);
+        });
+      }, 2000);
             }
           },
           (err: any) => {

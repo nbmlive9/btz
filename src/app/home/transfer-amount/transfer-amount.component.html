@@ -15,14 +15,41 @@
   <div class="container my-3">
     <div class="card balance-card shadow border-0 rounded-4 mx-auto" style="max-width:420px;">
       <div class="card-body p-4">
-          <h4 class="fw-bold text-center mb-4"> {{pfdata.actwallet | currency:'USD':true:'1.0-2'}} </h4>
+        <h4 class="text-danger">Wallet Transfer</h4>
+          <h4 class="fw-bold text-center mb-4"> {{ pfdata.actwallet | currency:'USD':'symbol':'1.0-2' }} </h4>
+          <div *ngIf="successMessage" class="alert alert-success text-center">
+            {{ successMessage }}
+          </div>
+          <div *ngIf="errorMessage" class="alert alert-danger text-center">
+            {{ errorMessage }}
+          </div>
           <form [formGroup]="form" novalidate>
-            <div class="mb-3">
-              <label class="form-label fw-semibold">Wallet ID</label>
-              <input type="text" class="form-control form-control-lg rounded-3" formControlName="regid" placeholder="Enter Wallet ID" (keyup)="onRegisterIdSelect($event)">
-                  <span class="text-success">{{idselectmsg}}</span>
-                  <span class="text-danger">{{errorMessage}}</span>
+           <div class="mb-3 position-relative">
+  <label class="form-label fw-semibold">Wallet ID</label>
+  <div class="input-group">
+    <input
+      type="text"
+      class="form-control form-control-lg rounded-3"
+      formControlName="regid"
+      placeholder="Enter Wallet ID"
+      (keyup)="onRegisterIdSelect($event)">
+
+    <!-- Upload QR Code Image -->
+                <button class="btn btn-outline-secondary" type="button" (click)="fileInput.click()">
+                  <i class="bi bi-qr-code-scan"></i>
+                </button>
+                <input
+                  type="file"
+                  accept="image/*"
+                  #fileInput
+                  style="display: none;"
+                  (change)="onFileSelected($event)">
+              </div>
+              <span class="text-success">{{ idselectmsg }}</span>
+              <span class="text-danger">{{ errorMessage }}</span>
             </div>
+
+
             <div class="mb-3">
               <label class="form-label fw-semibold">Amount</label>
               <input type="number" class="form-control form-control-lg rounded-3" formControlName="amount" placeholder="Enter Amount">
@@ -60,6 +87,29 @@
     
 
   </main>
+
+<!-- QR Scanner Modal -->
+<div class="modal fade" id="qrScannerModal" tabindex="-1" aria-labelledby="qrScannerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Scan QR Code</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body text-center">
+  
+        <zxing-scanner
+  [formats]="allowedFormats"
+  [tryHarder]="true"
+  [autofocusEnabled]="true"
+  [videoConstraints]="videoConstraints"
+  (scanSuccess)="onScanSuccess($event)">
+</zxing-scanner>
+
+      </div>
+    </div>
+  </div>
+</div>
 
   <app-footer></app-footer>
 

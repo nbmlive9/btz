@@ -13,6 +13,8 @@ import { TokenStorageService } from '../home/service/token-storage.service';
 export class LoginComponent {
 form:FormGroup;
   isLoggedIn: boolean = false;
+      successMessage: string = '';
+errorMessage: string = '';
   constructor(private auth:AuthService, private router: Router, private fb:FormBuilder, private tokenStorage: TokenStorageService){
         this.form = new FormGroup({
       regid: new FormControl('', [Validators.required]),
@@ -39,6 +41,13 @@ form:FormGroup;
       (err) => {
         // this.errorMessage = err.error.message;
         this.isLoggedIn = false;
+               this.successMessage = '';
+        this.errorMessage = '❌ Login Credentials Wrong. Please try again.';
+        setTimeout(() => {
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/login']);
+        });
+      }, 2000);
       }
     );
   }

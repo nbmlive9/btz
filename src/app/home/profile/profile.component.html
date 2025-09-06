@@ -1,9 +1,10 @@
-
-  <div class="container p-1 mt-3">
+<div class="container-fluid">
+  <div class=" p-1 mt-3">
     <h6 class="fw-bold back-link" onclick="history.back()" style="cursor: pointer;">
       <i class="fa fa-chevron-left fw-bold"></i> Back
     </h6>
   </div>
+</div>
   <div class="screen">
     <main class="p-3 pb-5 mb-5">
       <form [formGroup]="form" (ngSubmit)="updateProfile()" class="profile-form shadow-sm p-4 rounded bg-white">
@@ -27,7 +28,7 @@
       
         <!-- Wallet Address -->
         <div class="mb-3">
-          <label class="form-label fw-semibold">Wallet Address</label>
+          <label class="form-label fw-semibold">Wallet Address (BEP20 Network Only)</label>
           <input type="text" [(ngModel)]="pfdata.wallet1" formControlName="wallet1" class="form-control"  />
         </div>
       
