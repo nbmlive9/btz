@@ -48,12 +48,7 @@
                   <label class="form-label">Referral ID ({{data1?.name}})</label>
                   <div class="input-wrapper">
                     <i class="fas fa-key input-icon"></i>
-                    <input type="text" formControlName="sponcerid" placeholder="Enter referral ID" class="form-control" readonly>
-                  </div>
-                  <span class="text-success">{{ idselectmsg }}</span>
-                  <span class="text-danger">{{ errorMessage }}</span>
-                  <div *ngIf="form.get('sponcerid')?.touched && form.get('sponcerid')?.invalid" class="text-danger mt-1 small">
-                    Referral ID is required.
+                    <input type="text" formControlName="sponcerid" class="form-control" readonly>
                   </div>
                 </div>
 

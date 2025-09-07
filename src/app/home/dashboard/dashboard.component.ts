@@ -76,7 +76,7 @@ export class DashboardComponent {
 
   shareTo(platform: string) {
     const regid = this.pfdata?.regid;
-    const message = `Welcome to Bitraze! 🚀 Join for free: https://bitraze.org/referral/${regid}`;
+    const message = `Welcome to Bitraze! 🚀 Join for free: https://bitraze.org/btz/referral/${regid}`;
     const encodedMessage = encodeURIComponent(message);
 
     let url = '';
@@ -86,14 +86,14 @@ export class DashboardComponent {
         url = `https://api.whatsapp.com/send?text=${encodedMessage}`;
         break;
       case 'telegram':
-        url = `https://t.me/share/url?url=https://bitraze.org/referral/${regid}&text=${encodedMessage}`;
+        url = `https://t.me/share/url?url=https://bitraze.org/btz/referral/${regid}&text=${encodedMessage}`;
         break;
       case 'imo':
         if (navigator.share) {
           navigator.share({
             title: 'Bitraze Invite',
             text: message,
-            url: `https://bitraze.org/referral/${regid}`,
+            url: `https://bitraze.org/btz/referral/${regid}`,
           }).catch(err => console.error('Sharing failed:', err));
           return;
         } else {

@@ -37,21 +37,25 @@ allData: any[] = [];
     }
   }
 
-  loadMore(): void {
-  if (this.allLoaded) return;
+loadMore(): void {
+  if (this.allLoaded || this.loading) return; // stop if already loading or finished
 
   this.loading = true;
 
   this.api.WalletReportLoad(this.page, this.perPage).subscribe({
     next: (res: any) => {
-      const newData = res.data.data;
+      const newData = res.data?.data || [];
+
       if (newData.length > 0) {
-        this.allData = [...this.allData, ...newData]; // keep all loaded data
-        this.applyDateFilter(); // apply date filter immediately
-        this.page++;
+        // Append new data to existing data
+        this.allData = [...this.allData, ...newData];
+        this.applyDateFilter(); // filter updated list
+        this.page++; // increment page number
       } else {
+        // no more data from backend
         this.allLoaded = true;
       }
+
       this.loading = false;
     },
     error: (err) => {
@@ -60,6 +64,7 @@ allData: any[] = [];
     }
   });
 }
+
 
 applyDateFilter(): void {
   if (!this.startDate && !this.endDate) {

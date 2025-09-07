@@ -1,116 +1,120 @@
 import { Component } from '@angular/core';
-import { Location } from '@angular/common';   // ✅ Correct import
+import { Location } from '@angular/common';
 import { AuthUserService } from '../service/auth-user.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BarcodeFormat } from '@zxing/library';
 import { BrowserQRCodeReader } from '@zxing/browser';
+
 declare var bootstrap: any;
+
 @Component({
   selector: 'app-transfer-amount',
   templateUrl: './transfer-amount.component.html',
   styleUrls: ['./transfer-amount.component.scss']
 })
 export class TransferAmountComponent {
-  pfdata:any;
-    idselectmsg: string = '';
-  regname:any;
-    successMessage: string = '';
-errorMessage: string = '';
-    form:FormGroup;
-    tdata:any;
-      qrCodeValue: string = '';
-      allowedFormats = [BarcodeFormat.QR_CODE];
+  pfdata: any;
+  idselectmsg: string = '';
+  regname: any;
+  successMessage: string = '';
+  errorMessage: string = '';
+  form: FormGroup;
+  tdata: any = [];
 
-  // Force back camera
+  // QR Scanner Config
+  qrCodeValue: string = '';
+  allowedFormats = [BarcodeFormat.QR_CODE];
+
   videoConstraints = {
-    facingMode: { exact: 'environment' }  // ✅ Forces back camera
+    facingMode: { exact: 'environment' } // Use back camera
   };
 
-  constructor(private location: Location, private api:AuthUserService, private fb:FormBuilder, private route:ActivatedRoute, private router:Router) {
-     this.form = this.fb.group({
-          regid: new FormControl('', [Validators.required]),
-          amount: new FormControl('', [Validators.required]),
-        });
+  constructor(
+    private location: Location,
+    private api: AuthUserService,
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.form = this.fb.group({
+      regid: new FormControl('', [Validators.required]),
+      amount: new FormControl('', [Validators.required]),
+    });
   }
-  Back() {
-  this.location.back();
-}
 
-ngOnInit(){
-   // Get QR Code value from URL
-this.qrCodeValue = this.route.snapshot.paramMap.get('id') || '';
+  Back() {
+    this.location.back();
+  }
+
+  ngOnInit() {
+    // Get QR Code value from URL
+    this.qrCodeValue = this.route.snapshot.paramMap.get('id') || '';
     if (this.qrCodeValue) {
       this.form.patchValue({ regid: this.qrCodeValue });
     }
 
-
-  this.getProfiledata();
-  this.api.TransferWalletReport().subscribe((res:any)=>{
-     console.log('transfer',res);
-     this.tdata=res.data;
-  })
-}
-
- getProfiledata(){
-    this.api.Profile().subscribe((res:any)=>{
-      console.log('profile',res);
-      this.pfdata=res.data[0];
-    })
+    this.getProfiledata();
+    this.loadTransferTransactions();
   }
 
-    onRegisterIdSelect(event: any) {
+  /** Load Profile Data */
+  getProfiledata() {
+    this.api.Profile().subscribe((res: any) => {
+      this.pfdata = res.data[0];
+    });
+  }
+
+  /** Load Transfer Transactions */
+  loadTransferTransactions() {
+    this.api.TransferWalletReport().subscribe((res: any) => {
+      this.tdata = res.data;
+    });
+  }
+
+  /** When user types or QR code fills regid */
+  onRegisterIdSelect(event: any) {
     const id = event.target.value;
+    if (!id) return;
+
     this.api.UserNameDisplay(id).subscribe(
       (res4: any) => {
-        if (res4) {
-          console.log(res4);
+        if (res4?.data?.length) {
           this.regname = res4.data[0];
           this.idselectmsg = `User Name: ${this.regname.name}`;
-          this.errorMessage = ''; // Reset the error message when data is correct
+          this.errorMessage = '';
         } else {
-          console.log(res4);
-          this.regname = null; // Reset the regname object when data is incorrect
-          this.errorMessage = 'Error fetching user data';
+          this.regname = null;
           this.idselectmsg = 'User Not Available';
         }
       },
       (err: any) => {
-        this.errorMessage = err.error.message;
-        this.regname = null; // Reset the regname object when there's an error
+        this.errorMessage = err.error?.message || 'Error fetching user data';
+        this.regname = null;
         this.idselectmsg = '';
       }
     );
   }
 
-    openScanner() {
+  /** Open QR Scanner Modal */
+  openScanner() {
     const modalElement = document.getElementById('qrScannerModal');
     const modal = new bootstrap.Modal(modalElement);
     modal.show();
   }
 
-   onScanSuccess(result: string) {
-    console.log('QR Code Result:', result);
-    // Example: Fill the regid field only
+  /** When QR Code is successfully scanned */
+  onScanSuccess(result: string) {
     this.form.patchValue({ regid: result });
     this.onRegisterIdSelect({ target: { value: result } });
+
+    // Close modal automatically
+    const modalElement = document.getElementById('qrScannerModal');
+    const modal = bootstrap.Modal.getInstance(modalElement);
+    modal.hide();
   }
 
-  onPermissionResponse(event: boolean) {
-  if (event) {
-    console.log('Camera permission granted.');
-  } else {
-    console.warn('Camera permission denied by user.');
-    alert('Camera permission is required to scan QR codes.');
-  }
-}
-
-onPermissionDenied(event: any) {
-  console.error('Camera access was denied:', event);
-  alert('Please allow camera access to scan QR codes.');
-}
-
-/** 📸 Decode QR Code from Image File */
+  /** Upload Image & Decode QR Code */
   async onFileSelected(event: any) {
     const file = event.target.files[0];
     if (!file) return;
@@ -119,70 +123,50 @@ onPermissionDenied(event: any) {
       const codeReader = new BrowserQRCodeReader();
       const imgUrl = URL.createObjectURL(file);
 
-      // Decode the image
       const result = await codeReader.decodeFromImageUrl(imgUrl);
 
       if (result?.getText()) {
         const scannedRegId = result.getText();
-        console.log('Scanned QR Code:', scannedRegId);
-
-        // Update form with scanned regid
         this.form.patchValue({ regid: scannedRegId });
-
-        // Validate user automatically
         this.onRegisterIdSelect({ target: { value: scannedRegId } });
       } else {
         alert('No QR code detected in the image.');
       }
     } catch (error) {
-      console.error('QR Scan Error:', error);
       alert('Unable to read QR code from image.');
     }
   }
 
-Transfer() {
-  if (this.form.valid) {
-    const val = {
+  /** Transfer Amount */
+  Transfer() {
+    if (this.form.invalid) return;
+
+    const payload = {
       regid: this.form.value.regid,
       amount: this.form.value.amount,
     };
 
-    this.api.TransferWallet(val).subscribe(
+    this.api.TransferWallet(payload).subscribe(
       (res: any) => {
         if (res) {
           this.form.reset();
           this.successMessage = '✅ Amount transferred successfully!';
           this.errorMessage = '';
+        this.getProfiledata();
+        this.loadTransferTransactions();
           setTimeout(() => {
-          this.router.navigateByUrl('/transfer'); // redirect or reload component
-        }, 1000);
-          // Optionally reload transactions after transfer
-          this.api.TransferWalletReport().subscribe((res: any) => {
-            this.tdata = res.data;
-          });
-        } else {
-          this.successMessage = '';
-          this.errorMessage = '❌ Transfer failed. Please try again.';
-          this.form.markAllAsTouched();
-             setTimeout(() => {
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigate(['/transfer']);
-        });
-      }, 2000);
+            this.successMessage = '';
+            this.router.navigateByUrl('/transfer');
+          }, 1500);
         }
       },
       (err: any) => {
-        this.successMessage = '';
         this.errorMessage = '❌ Transfer failed. Please try again.';
-             setTimeout(() => {
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigate(['/transfer']);
-        });
-      }, 2000);
+          setTimeout(() => {
+            this.successMessage = '';
+            this.router.navigateByUrl('/transfer');
+          }, 1500);
       }
     );
   }
-}
-
-
 }

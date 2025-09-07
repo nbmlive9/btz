@@ -50,7 +50,7 @@
                     <i class="fas fa-key input-icon"></i>
                     <input type="text" formControlName="sponcerid" placeholder="Enter referral ID" class="form-control" (keyup)="onRegisterIdSelect($event)">
                   </div>
-                  <span class="text-success">{{ idselectmsg }}</span>
+                  <span class="text-white">{{ idselectmsg }}</span>
                   <span class="text-danger">{{ errorMessage }}</span>
                   <div *ngIf="form.get('sponcerid')?.touched && form.get('sponcerid')?.invalid" class="text-danger mt-1 small">
                     Referral ID is required.
@@ -81,45 +81,60 @@
   </section>
   
 
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content success-modal position-relative">
-        
-        <canvas id="confetti-canvas" 
-                class="position-absolute top-0 start-0 w-100 h-100" 
-                style="pointer-events: none;"></canvas>
-  
-        <div class="modal-header border-0">
-          <h5 class="modal-title fw-bold text-success">
-            <i class="bi bi-check-circle-fill me-2"></i> Registration Successful
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+ <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content position-relative">
+
+      <canvas id="confetti-canvas" class="position-absolute top-0 start-0 w-100 h-100" style="pointer-events: none;"></canvas>
+
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold text-success">
+          <i class="bi bi-check-circle-fill me-2"></i> Registration Successful
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body text-center">
+        <div class="p-3" *ngIf="udata">
+          <p><strong>Name:</strong> {{ udata.name }}</p>
+          <p><strong>User ID:</strong> {{ udata.regid }}</p>
+          <p><strong>Password:</strong> {{ udata.password }}</p>
+          <p><strong>Sponsor ID:</strong> {{ udata.refid }}</p>
+          <p><strong>Sponsor Name:</strong> {{ udata.sname }}</p>
         </div>
-  
-        <div class="modal-body custom-bg text-center">
-          <ng-container *ngIf="udata; else noData">
-            <div class="details-card p-3">
-              <p><strong>Name:</strong> {{ udata.name }}</p>
-              <p><strong>User ID:</strong> {{ udata.regid }}</p>
-              <p><strong>Password:</strong> {{ udata.password }}</p>
-              <p><strong>Sponsor ID:</strong> {{ udata.refid }}</p>
-              <p><strong>Sponsor Name:</strong> {{ udata.sname }}</p>
-            </div>
-          </ng-container>
-  
-          <ng-template #noData>
-            <p class="text-muted">No registration data available.</p>
-          </ng-template>
-        </div>
-  
-        <div class="modal-footer border-0 justify-content-center">
-          <button type="button" class="btn btn-success px-4" data-bs-dismiss="modal">
-            Done
-          </button>
-        </div>
+      </div>
+
+      <div class="modal-footer border-0 justify-content-center">
+        <button type="button" class="btn btn-success px-4" data-bs-dismiss="modal">
+          Done
+        </button>
       </div>
     </div>
   </div>
+</div>
+
+
+<div class="modal fade" id="errorModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-danger">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title">
+          <i class="bi bi-exclamation-triangle me-2"></i> Registration Failed
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body text-center">
+        <p class="text-danger fw-bold">{{ errorMessage }}</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-danger px-4" data-bs-dismiss="modal">
+          Try Again
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
   
   
   <style>
