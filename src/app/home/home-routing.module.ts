@@ -14,6 +14,7 @@ import { BuyMaxComponent } from './buy-max/buy-max.component';
 import { ReferralsComponent } from './referrals/referrals.component';
 import { ReferralsAllDataComponent } from './referrals-all-data/referrals-all-data.component';
 import { SelfTransferComponent } from './self-transfer/self-transfer.component';
+import { WalletRoiReportComponent } from './wallet-roi-report/wallet-roi-report.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: 'allreferrals', component: ReferralsAllDataComponent },
   { path: 'selftransfer', component: SelfTransferComponent },
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'walletri', component: WalletRoiReportComponent },
 
 ];
 

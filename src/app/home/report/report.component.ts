@@ -29,30 +29,34 @@ allData: any[] = [];
   }
 
   onScroll(event: any): void {
-    const target = event.target;
-    if (target.scrollHeight - target.scrollTop <= target.clientHeight + 10) {
-      if (!this.loading && !this.allLoaded) {
-        this.loadMore();
-      }
-    }
+  const target = event.target;
+
+  // calculate distance from bottom
+  const threshold = 20; // pixels from bottom to trigger
+  const position = target.scrollHeight - target.scrollTop - target.clientHeight;
+
+  if (position <= threshold && !this.loading && !this.allLoaded) {
+    this.loadMore();
   }
+}
 
 loadMore(): void {
-  if (this.allLoaded || this.loading) return; // stop if already loading or finished
+  if (this.loading || this.allLoaded) return;
 
   this.loading = true;
 
   this.api.WalletReportLoad(this.page, this.perPage).subscribe({
     next: (res: any) => {
+      console.log(res);
+      
       const newData = res.data?.data || [];
 
       if (newData.length > 0) {
-        // Append new data to existing data
         this.allData = [...this.allData, ...newData];
-        this.applyDateFilter(); // filter updated list
-        this.page++; // increment page number
+        this.applyDateFilter();
+        this.page++;
       } else {
-        // no more data from backend
+        // No data returned
         this.allLoaded = true;
       }
 
@@ -60,11 +64,16 @@ loadMore(): void {
     },
     error: (err) => {
       console.error('Error loading transactions', err);
+
+      // Treat 404 as no more data
+      if (err.status === 404) {
+        this.allLoaded = true;
+      }
+
       this.loading = false;
     }
   });
 }
-
 
 applyDateFilter(): void {
   if (!this.startDate && !this.endDate) {

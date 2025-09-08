@@ -7,19 +7,27 @@ import { AuthUserService } from '../service/auth-user.service';
   styleUrls: ['./referrals.component.scss']
 })
 export class ReferralsComponent {
-  
-data1:any;
-  constructor(private api:AuthUserService){}
+  data1: any;
+  isLoading = true; // Loading state
 
-  ngOnInit(){
+  constructor(private api: AuthUserService) {}
+
+  ngOnInit() {
     this.getreferrals();
   }
 
-  getreferrals(){
-    this.api.Referrals().subscribe((res:any)=>{
+  getreferrals() {
+    this.isLoading = true; // Start loading before API call
+    this.api.Referrals().subscribe({
+      next: (res: any) => {
         console.log(res);
-        this.data1=res.data.data;
-    })
+        this.data1 = res.data.data;
+        this.isLoading = false; // Stop loading once data is received
+      },
+      error: (err) => {
+        console.error('Error fetching referrals', err);
+        this.isLoading = false; // Stop loading even if error
+      }
+    });
   }
-
 }

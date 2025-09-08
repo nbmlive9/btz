@@ -22,6 +22,8 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { ReferralsAllDataComponent } from './referrals-all-data/referrals-all-data.component';
 import { SelfTransferComponent } from './self-transfer/self-transfer.component';
 import { ReferralLinkShareComponent } from './referral-link-share/referral-link-share.component';
+import { GbonusIncomeComponent } from './gbonus-income/gbonus-income.component';
+import { WalletRoiReportComponent } from './wallet-roi-report/wallet-roi-report.component';
 
 
 
@@ -32,7 +34,7 @@ import { ReferralLinkShareComponent } from './referral-link-share/referral-link-
     HomeComponent,
     GTeamComponent,
     DashboardComponent,
-    FooterComponent, ProfileComponent, TransferAmountComponent, ReceiveComponent, DepositComponent, DirectTeamComponent, ReportComponent, BuyLiteComponent, BuyProComponent, BuyMaxComponent, ReferralsComponent, ReferralsAllDataComponent, SelfTransferComponent, ReferralLinkShareComponent,
+    FooterComponent, ProfileComponent, TransferAmountComponent, ReceiveComponent, DepositComponent, DirectTeamComponent, ReportComponent, BuyLiteComponent, BuyProComponent, BuyMaxComponent, ReferralsComponent, ReferralsAllDataComponent, SelfTransferComponent, ReferralLinkShareComponent, GbonusIncomeComponent, WalletRoiReportComponent,
   ],
   imports: [
     CommonModule,

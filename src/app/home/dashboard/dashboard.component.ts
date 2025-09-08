@@ -28,6 +28,7 @@ export class DashboardComponent {
 
   pfdata:any;
   hdata:any;
+    gbonus: boolean = false;
   setassets: boolean = true;
   glevel: boolean = false;
   referrals: boolean = false;
@@ -36,23 +37,43 @@ export class DashboardComponent {
     this.glevel = section === 'glevel';
     this.referrals = section === 'referrals';
   }
+     showSection1(section: string) {
+     this.gbonus = section === 'gbonus';
+  }
+    openGBonusModal() {
+    this.showSection1('gbonus');  // set gbonus true
+  }
   wdata:any;
    permissionDenied: boolean = false;
+   loadingWallet: boolean = false;
   constructor(private api:AuthUserService){}
 
   ngOnInit(){
     this.getProfiledata();
     this.getDashboarddata();
-    this.api.WalletReport().subscribe((res:any)=>{
-     console.log('walletreport',res);
-     this.wdata=res.data.data;
-    });
+    this.gwalletReport();
+    
     this.api.GetPackages().subscribe((res:any)=>{
         console.log('packages',res);
         this.pack=res.data;
     });
     // gteam
   
+  }
+
+  gwalletReport(){
+    this.loadingWallet = true;
+  this.api.WalletReport().subscribe({
+    next: (res: any) => {
+      console.log('walletreport', res);
+      this.wdata = res.data.data;
+      this.loadingWallet = false;  // stop loading
+    },
+    error: (err) => {
+      console.error('Error fetching wallet report', err);
+      this.loadingWallet = false;  // stop loading even on error
+    }
+  });
   }
 
   getProfiledata(){

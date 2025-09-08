@@ -76,45 +76,59 @@
   </section>
   
 
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content success-modal position-relative">
-        
-        <canvas id="confetti-canvas" 
-                class="position-absolute top-0 start-0 w-100 h-100" 
-                style="pointer-events: none;"></canvas>
-  
-        <div class="modal-header border-0">
-          <h5 class="modal-title fw-bold text-success">
-            <i class="bi bi-check-circle-fill me-2"></i> Registration Successful
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+ <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content position-relative">
+
+      <canvas id="confetti-canvas" class="position-absolute top-0 start-0 w-100 h-100" style="pointer-events: none;"></canvas>
+
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold text-success">
+          <i class="bi bi-check-circle-fill me-2"></i> Registration Successful
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body text-center">
+        <div class="p-3" *ngIf="udata">
+          <p><strong>Name:</strong> {{ udata.name }}</p>
+          <p><strong>User ID:</strong> {{ udata.regid }}</p>
+          <p><strong>Password:</strong> {{ udata.password }}</p>
+          <p><strong>Sponsor ID:</strong> {{ udata.refid }}</p>
+          <p><strong>Sponsor Name:</strong> {{ udata.sname }}</p>
         </div>
-  
-        <div class="modal-body custom-bg text-center">
-          <ng-container *ngIf="udata; else noData">
-            <div class="details-card p-3">
-              <p><strong>Name:</strong> {{ udata.name }}</p>
-              <p><strong>User ID:</strong> {{ udata.regid }}</p>
-              <p><strong>Password:</strong> {{ udata.password }}</p>
-              <p><strong>Sponsor ID:</strong> {{ udata.refid }}</p>
-              <p><strong>Sponsor Name:</strong> {{ udata.sname }}</p>
-            </div>
-          </ng-container>
-  
-          <ng-template #noData>
-            <p class="text-muted">No registration data available.</p>
-          </ng-template>
-        </div>
-  
-        <div class="modal-footer border-0 justify-content-center">
-          <button type="button" class="btn btn-success px-4" data-bs-dismiss="modal">
-            Done
-          </button>
-        </div>
+      </div>
+
+      <div class="modal-footer border-0 justify-content-center">
+        <button type="button" class="btn btn-success px-4" data-bs-dismiss="modal">
+          Done
+        </button>
       </div>
     </div>
   </div>
+</div>
+
+
+<div class="modal fade" id="errorModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-danger">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title">
+          <i class="bi bi-exclamation-triangle me-2"></i> Registration Failed
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body text-center">
+        <p class="text-danger fw-bold">{{ errorMessage }}</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-danger px-4" data-bs-dismiss="modal">
+          Try Again
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
   
   
   <style>
@@ -178,19 +192,19 @@
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="termsModalLabel">MYUSD.co – Terms & Conditions</h5>
+          <h5 class="modal-title" id="termsModalLabel">bitraze.org – Terms & Conditions</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
           <p><strong>Effective Date:</strong> [Insert Date]</p>
   
-          <p>Welcome to <strong>MYUSD.co</strong>, an AI-powered trading platform designed to assist users in executing automated cryptocurrency and digital asset trades using algorithmic strategies. By accessing or using our website, mobile application, or related services (collectively, the “Platform”), you agree to comply with and be bound by these Terms and Conditions (“Terms”).</p>
+          <p>Welcome to <strong>bitraze.org</strong>, an AI-powered trading platform designed to assist users in executing automated cryptocurrency and digital asset trades using algorithmic strategies. By accessing or using our website, mobile application, or related services (collectively, the “Platform”), you agree to comply with and be bound by these Terms and Conditions (“Terms”).</p>
   
           <h6>1. Eligibility</h6>
           <p>You must be at least 18 years old and legally permitted to use digital asset trading services in your jurisdiction.</p>
   
           <h6>2. Nature of Services</h6>
-          <p>MYUSD.co provides AI-driven trading tools, market analytics, and automation features. We do not guarantee profits.</p>
+          <p>bitraze.org provides AI-driven trading tools, market analytics, and automation features. We do not guarantee profits.</p>
   
           <h6>3. Risk Acknowledgment</h6>
           <p>Cryptocurrency trading involves significant risk, and you may lose part or all of your invested capital.</p>
@@ -220,7 +234,7 @@
           <p>We may update these Terms at any time, and continued use constitutes acceptance.</p>
   
           <h6>12. Contact Us</h6>
-          <p>Email: <a href="mailto:support@myusd.co">support@myusd.co</a></p>
+          <p>Email: <a href="mailto:support@bitraze.org">support@bitraze.org</a></p>
   
           <p class="text-danger"><strong>Important:</strong> Cryptocurrency and AI-based trading involve high risk. Trade only if you fully understand the risks.</p>
         </div>

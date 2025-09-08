@@ -196,6 +196,19 @@ WalletReport(){
   );   
 }
 
+WalletRoiReport(){
+  const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  }
+  return this.http.get(
+    AUTH_API + 'Wallet_Roi',
+    httpOptions
+  );   
+}
 
 WalletReportLoad(page: number, perPage: number) {
     const token1 = this.token.getToken();
@@ -235,6 +248,7 @@ TransferWallet(value: {
 
 SelfTransferWallet(value: {
   amount: number;
+  waltype:string;
 }){
   const token1 = this.token.getToken();
   const httpOptions = {
@@ -247,6 +261,7 @@ SelfTransferWallet(value: {
     AUTH_API + 'Wallet_SelfTransefer',
     { 
     "amount":value.amount,  
+    "waltype":value.waltype,  
   },
      httpOptions 
   );
@@ -276,6 +291,20 @@ RecivedWalletReport(){
   }
   return this.http.get(
     AUTH_API + 'Wallet_Receivereport',
+    httpOptions
+  );   
+}
+
+GbonusWalletReport(){
+  const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  }
+  return this.http.get(
+    AUTH_API + 'Level_Bonus',
     httpOptions
   );   
 }

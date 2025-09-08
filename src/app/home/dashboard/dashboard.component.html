@@ -60,10 +60,19 @@
     <!-- CONGRATULATION STAKING BANNER -->
 <div class="staking-banner mx-3 my-3 p-3 rounded-4 shadow-lg d-flex justify-content-between align-items-center">
   <div class="banner-text">
-    <p class="mb-0">{{ pfdata?.tcoins}} <span class="small">BTZ</span></p>
+    <p class="mb-0">{{ pfdata?.coins}} <span class="small">BTZ</span></p>
   </div>
   <div class="banner-amount text-end">
     <h6 class="fw-bold text-white">Staking token</h6>
+  </div>
+</div>
+
+<div class="staking-banner mx-3 my-1 p-3 rounded-4 shadow-lg d-flex justify-content-between align-items-center">
+  <div class="banner-text">
+    <p class="mb-0">Balance Business</p>
+  </div>
+  <div class="banner-amount text-end">
+    <h6 class="fw-bold text-white">{{ pfdata?.balance | currency:'USD':'symbol':'1.0-2'}} </h6>
   </div>
 </div>
 
@@ -97,10 +106,13 @@
     </div>
   </div>
     <div class="container">
-      <div class="">
-        <button class="btn btn-outline-primary btn-sm mt-2 w-100 fw-bold" data-bs-toggle="modal" data-bs-target="#gIncomeModal">
-  View G-Team Incomes
-</button>
+      <div>
+        <button class="btn btn-outline-primary btn-sm mt-2 w-100 fw-bold"
+                data-bs-toggle="modal"
+                data-bs-target="#gIncomeModal"
+                (click)="openGBonusModal()">
+          View G-Team Incomes
+        </button>
       </div>
     </div>
   <!-- QUICK ACTIONS SCROLLER -->
@@ -118,7 +130,7 @@
         <i class="bi bi-arrow-repeat fs-4"></i>
         <p class="mt-1 small">Transfer</p>
       </div>
-      <div class="scroll-item text-center">
+      <div class="scroll-item text-center" routerLink="/walletri">
         <i class="bi bi-check-square fs-4"></i>
         <p class="mt-1 small">Stake</p>
       </div>
@@ -192,28 +204,42 @@
 <div class="mb-5">
   <!-- TRANSACTIONS VIEW -->
   <div class="container mt-3 mb-5" *ngIf="setassets">
-    <div class="fw-bold mb-2 fs-5">Recent Transactions</div>
-    <div class="vstack gap-3">
-      <div *ngFor="let wd of wdata" class="txn-card shadow-sm p-3 d-flex align-items-center rounded-3">
-        <div class="txn-icon me-3"><i class="bi bi-person fs-4"></i></div>
-        <div class="flex-grow-1 d-flex justify-content-between align-items-center">
-          <div>
-            <div class="fw-semibold">Level {{ wd.level }} Credit</div>
-            <div class="text-muted small">{{ wd.cdate | date:'dd/MM/yyyy' }}</div>
+  <div class="fw-bold mb-2 fs-5">Recent Transactions</div>
+
+  <!-- Loading Spinner -->
+  <div class="text-center my-4" *ngIf="loadingWallet">
+    <img src="assets/favicon.png" alt="Loading..." style="width:50px; height:50px;">
+    <p class="text-muted fw-semibold mt-2">Loading transactions...</p>
+  </div>
+
+  <!-- Wallet Data -->
+  <div class="vstack gap-3" *ngIf="!loadingWallet && wdata?.length > 0">
+    <div *ngFor="let wd of wdata" class="txn-card shadow-sm p-3 d-flex align-items-center rounded-3">
+      <div class="txn-icon me-3"><i class="bi bi-person fs-4"></i></div>
+      <div class="flex-grow-1 d-flex justify-content-between align-items-center">
+        <div>
+          <div class="fw-semibold">Level {{ wd.level }} Credit</div>
+          <div class="text-muted small">{{ wd.cdate | date:'dd/MM/yyyy' }}</div>
+        </div>
+        <div class="text-end">
+          <div [ngClass]="wd.amount >= 0 ? 'text-success fw-bold' : 'text-danger fw-bold'">
+            {{ wd.amount | currency:'USD':'symbol':'1.0-2' }}
           </div>
-          <div class="text-end">
-            <div [ngClass]="wd.amount >= 0 ? 'text-success fw-bold' : 'text-danger fw-bold'">
-              {{ wd.amount | currency:'USD':'symbol':'1.0-2' }}
-            </div>
-            <span class="badge rounded-pill mt-1 px-3 py-1"
-                  [ngClass]="wd.amount >= 0 ? 'bg-success bg-opacity-10 text-success' : 'bg-danger bg-opacity-10 text-danger'">
-              {{ wd.amount >= 0 ? 'Credit' : 'Debit' }}
-            </span>
-          </div>
+          <span class="badge rounded-pill mt-1 px-3 py-1"
+                [ngClass]="wd.amount >= 0 ? 'bg-success bg-opacity-10 text-success' : 'bg-danger bg-opacity-10 text-danger'">
+            {{ wd.amount >= 0 ? 'Credit' : 'Debit' }}
+          </span>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- No Data -->
+  <div *ngIf="!loadingWallet && (!wdata || wdata.length === 0)" class="text-center mt-4">
+    <p class="text-muted fw-semibold">No transactions available</p>
+  </div>
+</div>
+
 
   <!-- REFERRALS AND GTEAM COMPONENTS -->
   <div *ngIf="referrals"><app-referrals></app-referrals></div>
@@ -223,45 +249,27 @@
 
   <app-footer></app-footer>
 
-
-<!-- G-Level Incomes Modal -->
+  
+<!-- G-Team Income Modal -->
 <div class="modal fade" id="gIncomeModal" tabindex="-1" aria-labelledby="gIncomeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-sm">
     <div class="modal-content rounded-4 shadow-lg border-0">
-      
-      <!-- Modal Header -->
+
+      <!-- Header -->
       <div class="modal-header bg-gradient-blue text-white rounded-top-4">
         <h5 class="modal-title fw-bold" id="gIncomeModalLabel">G-Team Business</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
 
-      <!-- Modal Body -->
+      <!-- Body -->
       <div class="modal-body p-3">
-        <div class="d-flex flex-column gap-2">
-          <div class="d-flex justify-content-between align-items-center p-2 rounded-3 shadow-sm bg-light">
-            <span class="fw-semibold">G1 Business</span>
-            <span class="badge bg-success">{{ hdata?.G1income | currency:'USD':'symbol':'1.0-2' }}</span>
-          </div>
-          <div class="d-flex justify-content-between align-items-center p-2 rounded-3 shadow-sm bg-light">
-            <span class="fw-semibold">G2 Business</span>
-            <span class="badge bg-success">{{ hdata?.G2income | currency:'USD':'symbol':'1.0-2' }}</span>
-          </div>
-          <div class="d-flex justify-content-between align-items-center p-2 rounded-3 shadow-sm bg-light">
-            <span class="fw-semibold">G3 Business</span>
-            <span class="badge bg-success">{{ hdata?.G3income | currency:'USD':'symbol':'1.0-2' }}</span>
-          </div>
-          <div class="d-flex justify-content-between align-items-center p-2 rounded-3 shadow-sm bg-light">
-            <span class="fw-semibold">G4 Business</span>
-            <span class="badge bg-success">{{ hdata?.G4income | currency:'USD':'symbol':'1.0-2' }}</span>
-          </div>
-          <div class="d-flex justify-content-between align-items-center p-2 rounded-3 shadow-sm bg-light">
-            <span class="fw-semibold">G5 Business</span>
-            <span class="badge bg-success">{{ hdata?.G5income | currency:'USD':'symbol':'1.0-2' }}</span>
-          </div>
-        </div>
+        <!-- Load component only when gbonus = true -->
+        <ng-container *ngIf="gbonus">
+          <app-gbonus-income></app-gbonus-income>
+        </ng-container>
       </div>
 
-      <!-- Modal Footer -->
+      <!-- Footer -->
       <div class="modal-footer border-0">
         <button class="btn btn-secondary w-100 rounded-pill" data-bs-dismiss="modal">
           Close

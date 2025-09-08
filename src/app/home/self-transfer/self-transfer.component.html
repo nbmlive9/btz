@@ -8,29 +8,87 @@
     </div>
   </div>
   <!-- Wallet Add Form -->
-  <div class="container my-3">
-    <div class="card balance-card shadow border-0 rounded-4 mx-auto" style="max-width:420px;">
-      <div class="card-body p-4">
-      <h5 class="text-primary">Self Transfer</h5>
-         <div *ngIf="successMessage" class="alert alert-success text-center">
-            {{ successMessage }}
-          </div>
-          <div *ngIf="errorMessage" class="alert alert-danger text-center">
-            {{ errorMessage }}
-          </div>
-          <h4 class="fw-bold text-center mb-4"> {{pfdata.walletamount | currency:'USD':true:'1.0-2'}} </h4>
-          <form [formGroup]="form" novalidate>
-            <div class="mb-3">
-              <label class="form-label fw-semibold">Amount</label>
-              <input type="number" class="form-control form-control-lg rounded-3" formControlName="amount" placeholder="Enter Amount">
-            </div>
-            <div class="d-grid">
-              <button class="btn btn-success btn-lg rounded-3" type="submit" (click)="Transfer()" [disabled]="!form.valid">Transfer</button>
-            </div>
-          </form>
+ 
+
+  <!-- Wallet Add Form -->
+  <div class="container my-4">
+  <h3 class="fw-bold text-center text-primary mb-4">Self Transfer</h3>
+  <!-- Success & Error Messages -->
+  <div *ngIf="successMessage" class="alert alert-success text-center">
+    {{ successMessage }}
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-danger text-center">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Wallet Cards -->
+  <div class="row g-4 justify-content-center">
+    <!-- Bonus Wallet Card -->
+    <div class="col-md-5">
+      <div class="card shadow border-0 rounded-4 text-center p-4 h-100">
+        <h5 class="fw-bold text-secondary">G-Bonus Wallet</h5>
+    <h4 class="fw-bold text-center mb-4"> {{pfdata.repurchasewallet | currency:'USD':true:'1.0-2'}} </h4>
+        <h3 class="fw-bold text-primary mt-2">
+          {{ pfdata?.bonuswallet | currency:'USD':true:'1.0-2' }}
+        </h3>
+        <button class="btn btn-success mt-3 rounded-pill px-4"
+                (click)="openTransferModal('bonus')">
+          Transfer
+        </button>
+      </div>
+    </div>
+
+    <!-- Earning Wallet Card -->
+    <div class="col-md-5">
+      <div class="card shadow border-0 rounded-4 text-center p-4 h-100">
+        <h5 class="fw-bold text-secondary">Earning Wallet</h5>
+    <h4 class="fw-bold text-center mb-4"> {{pfdata.walletamount | currency:'USD':true:'1.0-2'}} </h4>
+        <h3 class="fw-bold text-primary mt-2">
+          {{ pfdata?.earningwallet | currency:'USD':true:'1.0-2' }}
+        </h3>
+        <button class="btn btn-success mt-3 rounded-pill px-4"
+                (click)="openTransferModal('earning')">
+          Transfer
+        </button>
       </div>
     </div>
   </div>
+</div>
+
+<!-- Transfer Modal -->
+<div class="modal fade" id="transferModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 border-0 shadow">
+      <div class="modal-header">
+        <h5 class="modal-title text-primary">Transfer from {{ selectedWallet | titlecase }} Wallet</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form" novalidate>
+          <input type="hidden" formControlName="waltype" [value]="selectedWallet" />
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Enter Amount</label>
+            <input type="number"
+                   class="form-control form-control-lg rounded-3"
+                   formControlName="amount"
+                   placeholder="Enter Amount">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-success rounded-pill px-4"
+                [disabled]="!form.valid"
+                (click)="Transfer()"
+                data-bs-dismiss="modal">
+          Confirm Transfer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
   <!-- App Bar -->
   <!-- Transactions -->
   <main class="container my-4 mb-5">

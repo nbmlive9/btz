@@ -29,17 +29,20 @@ allData: any[] = [];
     this.location.back();
   }
 
-  onScroll(event: any): void {
-    const target = event.target;
-    if (target.scrollHeight - target.scrollTop <= target.clientHeight + 10) {
-      if (!this.loading && !this.allLoaded) {
-        this.loadMore();
-      }
-    }
-  }
+   onScroll(event: any): void {
+  const target = event.target;
 
-  loadMore(): void {
-  if (this.allLoaded) return;
+  // calculate distance from bottom
+  const threshold = 20; // pixels from bottom to trigger
+  const position = target.scrollHeight - target.scrollTop - target.clientHeight;
+
+  if (position <= threshold && !this.loading && !this.allLoaded) {
+    this.loadMore();
+  }
+}
+
+loadMore(): void {
+  if (this.loading || this.allLoaded) return;
 
   this.loading = true;
 
@@ -47,18 +50,27 @@ allData: any[] = [];
     next: (res: any) => {
       console.log(res);
       
-      const newData = res.data.data;
+      const newData = res.data?.data || [];
+
       if (newData.length > 0) {
-        this.allData = [...this.allData, ...newData]; // keep all loaded data
-        this.applyDateFilter(); // apply date filter immediately
+        this.allData = [...this.allData, ...newData];
+        this.applyDateFilter();
         this.page++;
       } else {
+        // No data returned
         this.allLoaded = true;
       }
+
       this.loading = false;
     },
     error: (err) => {
       console.error('Error loading transactions', err);
+
+      // Treat 404 as no more data
+      if (err.status === 404) {
+        this.allLoaded = true;
+      }
+
       this.loading = false;
     }
   });

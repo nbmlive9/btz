@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { AuthUserService } from '../service/auth-user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-
+declare var bootstrap: any;
 @Component({
   selector: 'app-self-transfer',
   templateUrl: './self-transfer.component.html',
@@ -19,9 +19,11 @@ export class SelfTransferComponent {
       qrCodeValue: string = '';
           successMessage: string = '';
 errorMessage: string = '';
+ selectedWallet: string = '';
   constructor(private location: Location, private api:AuthUserService, private fb:FormBuilder, private route:ActivatedRoute, private router:Router) {
      this.form = this.fb.group({
           amount: new FormControl('', [Validators.required]),
+          waltype:new FormControl('',),
         });
   }
   Back() {
@@ -43,12 +45,19 @@ ngOnInit(){
     })
   }
 
+ openTransferModal(wallet: string) {
+    this.selectedWallet = wallet;
+    this.form.patchValue({ waltype: wallet, amount: '' });
+    const modal = new bootstrap.Modal(document.getElementById('transferModal'));
+    modal.show();
+  }
 
   Transfer(){
       console.log(this.form.value);
       if (this.form.valid) {
         const val = {
           amount: this.form.value.amount,
+          waltype:this.form.value.waltype
         };
         this.api.SelfTransferWallet(val).subscribe(
           (a:any) => {
