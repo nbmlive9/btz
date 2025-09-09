@@ -90,7 +90,7 @@
       </small> -->
       <p *ngIf="copied" class="text-white mt-1">Copied!</p>
       <div class="d-flex justify-content-between mt-3 text-white">
-        <div><small>Staking Bonus</small><br>{{ hdata?.dailyincome | currency:'USD':true:'1.0-2' }} btz</div>
+        <div><small>Growth Bonus</small><br>{{ pfdata?.repurchasewallet | currency:'USD':true:'1.0-2' }} btz</div>
         <div><small>My Referrals</small><br><i class="fa fa-user"></i> {{ hdata?.sponsors }}</div>
       </div>
     </div>
@@ -166,7 +166,7 @@
         <span class="amount">$250</span>
         <span class="amount">$500</span>
       </div>
-      <button class="btn btn-light btn-sm fw-bold" routerLink="/bitraze-lite">Buy Now</button>
+      <button class="btn btn-light btn-sm fw-bold" routerLink="/bitraze-pro">Buy Now</button>
     </div>
 
     <!-- Card 3: Bitraze Max -->
@@ -179,9 +179,19 @@
         <span class="amount">$5000</span>
         <span class="amount">$10000</span>
       </div>
-      <button class="btn btn-light btn-sm fw-bold" routerLink="/bitraze-lite">Buy Now</button>
+      <button class="btn btn-light btn-sm fw-bold" routerLink="/bitraze-max">Buy Now</button>
     </div>
 
+  </div>
+</div>
+
+<div class="container">
+  <div class="global-fund-card flex-shrink-0 p-3 rounded-4 shadow-sm text-white text-center">
+    <h5 class="fw-bold mb-2">Global Fund</h5>
+    <div class="join-amount mb-3">
+      <span class="amount">$0</span>
+    </div>
+    <button class="btn btn-light btn-sm fw-bold" routerLink="/btzbonus">Promotion Bonus</button>
   </div>
 </div>
 

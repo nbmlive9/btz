@@ -30,7 +30,7 @@ goBack() {
   ngOnInit(){
     this.receiveddata();
     this.api.Profile().subscribe((res:any)=>{
-      console.log('profile',res)
+      // console.log('profile',res)
       this.pdata=res.data[0];
        this.qrData = this.pdata.regid;
     });
@@ -38,7 +38,7 @@ goBack() {
 
   receiveddata() {
     this.api.RecivedWalletReport().subscribe((res: any) => {
-      console.log(res);
+      // console.log(res);
       this.rdata = res.data || []; // fallback to empty array
     });
   }

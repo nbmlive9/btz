@@ -47,7 +47,7 @@ loadMore(): void {
 
   this.api.WalletReportLoad(this.page, this.perPage).subscribe({
     next: (res: any) => {
-      console.log(res);
+      // console.log(res);
       
       const newData = res.data?.data || [];
 

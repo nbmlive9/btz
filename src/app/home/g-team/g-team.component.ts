@@ -23,7 +23,7 @@ export class GTeamComponent {
 
     this.api.levelMember().subscribe({
       next: (res: any) => {
-        console.log('team', res);
+        // console.log('team', res);
 
         const data = res.data;
 

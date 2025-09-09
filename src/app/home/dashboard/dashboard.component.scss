@@ -216,3 +216,49 @@
     padding: 0.6rem;
   }
 }
+
+.global-fund-card {
+  width: 100%;
+  background: linear-gradient(135deg, #2c3e50, #4ca1af); /* Modern blue-grey gradient */
+  color: #fff;
+  text-align: center;
+  border: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  /* Elegant Shadow */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+
+  /* Smooth hover animation */
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Title styling */
+  h5 {
+    font-size: 1.4rem;
+    letter-spacing: 0.5px;
+  }
+
+  /* Amount styling */
+  .join-amount .amount {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  /* Button styling */
+  .btn {
+    border-radius: 25px;
+    padding: 0.4rem 1.2rem;
+    font-size: 0.9rem;
+    background: #ffffff;
+    color: #2c3e50;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: #f1f1f1;
+      color: #000;
+    }
+  }
+}

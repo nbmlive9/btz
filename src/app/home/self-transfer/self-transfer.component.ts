@@ -33,14 +33,14 @@ errorMessage: string = '';
 ngOnInit(){
   this.getProfiledata();
   this.api.TransferWalletReport().subscribe((res:any)=>{
-     console.log('transfer',res);
+    //  console.log('transfer',res);
      this.tdata=res.data;
   })
 }
 
  getProfiledata(){
     this.api.Profile().subscribe((res:any)=>{
-      console.log('profile',res);
+      // console.log('profile',res);
       this.pfdata=res.data[0];
     })
   }
@@ -53,7 +53,7 @@ ngOnInit(){
   }
 
   Transfer(){
-      console.log(this.form.value);
+      // console.log(this.form.value);
       if (this.form.valid) {
         const val = {
           amount: this.form.value.amount,
@@ -62,7 +62,7 @@ ngOnInit(){
         this.api.SelfTransferWallet(val).subscribe(
           (a:any) => {
             if (a) {
-              console.log(a);
+              // console.log(a);
                  this.form.reset();
                   this.successMessage = 'Successfully Transfer Amount';
           this.errorMessage = '';
@@ -72,7 +72,7 @@ ngOnInit(){
         });
       }, 2000);
             } else {
-              console.log(a);
+              // console.log(a);
                this.form.markAllAsTouched();
               this.successMessage = '';
           this.errorMessage = '❌ Self Transfer failed. Please try again.';

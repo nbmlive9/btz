@@ -54,7 +54,7 @@ export class DashboardComponent {
     this.gwalletReport();
     
     this.api.GetPackages().subscribe((res:any)=>{
-        console.log('packages',res);
+        // console.log('packages',res);
         this.pack=res.data;
     });
     // gteam
@@ -65,7 +65,7 @@ export class DashboardComponent {
     this.loadingWallet = true;
   this.api.WalletReport().subscribe({
     next: (res: any) => {
-      console.log('walletreport', res);
+      // console.log('walletreport', res);
       this.wdata = res.data.data;
       this.loadingWallet = false;  // stop loading
     },
@@ -78,13 +78,13 @@ export class DashboardComponent {
 
   getProfiledata(){
     this.api.Profile().subscribe((res:any)=>{
-      console.log('profile',res);
+      // console.log('profile',res);
       this.pfdata=res.data[0];
     })
   }
     getDashboarddata(){
     this.api.DashboardData().subscribe((res:any)=>{
-      console.log('homedata',res);
+      // console.log('homedata',res);
       this.hdata=res.data;
     })
   }

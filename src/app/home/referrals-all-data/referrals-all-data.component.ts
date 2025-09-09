@@ -48,7 +48,7 @@ loadMore(): void {
 
   this.api.ReferralsAllData(this.page, this.perPage).subscribe({
     next: (res: any) => {
-      console.log(res);
+      // console.log(res);
       
       const newData = res.data?.data || [];
 

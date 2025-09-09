@@ -15,6 +15,7 @@ import { ReferralsComponent } from './referrals/referrals.component';
 import { ReferralsAllDataComponent } from './referrals-all-data/referrals-all-data.component';
 import { SelfTransferComponent } from './self-transfer/self-transfer.component';
 import { WalletRoiReportComponent } from './wallet-roi-report/wallet-roi-report.component';
+import { PromotionBonusComponent } from './promotion-bonus/promotion-bonus.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -27,12 +28,13 @@ const routes: Routes = [
   { path: 'report', component: ReportComponent },
   { path: 'bitraze-lite', component: BuyLiteComponent },
   { path: 'bitraze-pro', component: BuyProComponent },
-  { path: 'report-max', component: BuyMaxComponent },
+  { path: 'bitraze-max', component: BuyMaxComponent },
   { path: 'myreferrals', component: ReferralsComponent },
   { path: 'allreferrals', component: ReferralsAllDataComponent },
   { path: 'selftransfer', component: SelfTransferComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'walletri', component: WalletRoiReportComponent },
+  { path: 'btzbonus', component: PromotionBonusComponent },
 
 ];
 

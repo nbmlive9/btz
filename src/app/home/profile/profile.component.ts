@@ -60,7 +60,7 @@ export class ProfileComponent implements OnInit {
     const payload = this.form.value;
     this.api.UpdateProfile(payload).subscribe({
       next: (res: any) => {
-        console.log('Profile updated successfully', res);
+        // console.log('Profile updated successfully', res);
         this.isEditing = false;
         this.form.disable(); // lock fields after saving
          setTimeout(() => {
@@ -75,7 +75,7 @@ export class ProfileComponent implements OnInit {
   getProfiledata() {
     this.api.Profile().subscribe((res: any) => {
       this.pfdata = res.data[0];
-      console.log(res);
+      // console.log(res);
       
       this.form.patchValue({
         name: this.pfdata.name,

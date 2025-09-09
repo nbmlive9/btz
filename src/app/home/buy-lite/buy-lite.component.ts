@@ -46,15 +46,17 @@ ngOnInit(){
   }
 
 
-getpackages(){
-  this.api.GetPackages().subscribe((res:any)=>{
-    console.log('packages',res);
-    this.pack=res.data;
-    
-  })
+getpackages() {
+  this.api.GetPackages().subscribe((res: any) => {
+    // console.log('packages', res);
+
+    // ✅ Filter only lite packages
+    this.pack = res.data.filter((pkg: any) => pkg.ptype === 'lite');
+  });
 }
+
 submitAction() {
-  console.log(this.form.value);
+  // console.log(this.form.value);
 
   if (this.form.valid) {
     const val = {
@@ -65,7 +67,7 @@ submitAction() {
       // Call Activation
       this.api.Activation(val).subscribe(
         (res: any) => {
-          console.log('Activation response:', res);
+          // console.log('Activation response:', res);
           this.form.reset();
           this.successMessage = '✅ Package Purchased successfully!';
             this.errorMessage = '';
@@ -89,7 +91,7 @@ submitAction() {
       // Call Topup
       this.api.Topup(val).subscribe(
         (res: any) => {
-          console.log('Topup response:', res);
+          // console.log('Topup response:', res);
           this.form.reset();
             this.successMessage = '✅ Package Purchased successfully!';
             this.errorMessage = '';
@@ -115,23 +117,25 @@ submitAction() {
     this.form.markAllAsTouched();
   }
 }
+
 openModal(pkg: any) {
-  // set both package id and amount into the form
+  // ✅ Update form with selected package
   this.form.patchValue({
     package: pkg.id,
     regid: this.pdata.regid
   });
 
-  // also update the amount input display
+  // ✅ Update readonly amount input
   const input = document.getElementById('amountInput') as HTMLInputElement;
-  if (input) input.value = pkg.amount;
+  if (input) {
+    input.value = pkg.amount;
+  }
 }
+
 
 getPackageClass(p: any) {
   switch (p.ptype) {
     case 'lite': return 'bg-gradient-green';
-    case 'max': return 'bg-gradient-blue';
-    case 'pro': return 'bg-gradient-purple';
     default: return 'bg-gradient-green';
   }
 }

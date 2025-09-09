@@ -58,7 +58,7 @@ export class DepositComponent implements OnInit {
     this.loadingTxns = true;
     this.api.DepositeData().subscribe({
       next: (res: any) => {
-        console.log('depositdata', res);
+        // console.log('depositdata', res);
         this.ddata = res.data || [];
         this.loadingTxns = false;
       },
@@ -70,7 +70,7 @@ export class DepositComponent implements OnInit {
     });
 
     this.api.Profile().subscribe((res: any) => {
-      console.log(res);
+      // console.log(res);
       this.pdata = res.data[0];
     });
   }
@@ -110,17 +110,17 @@ export class DepositComponent implements OnInit {
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'x-api-key': 'W4107KT-X5T4DC2-MMHPRF7-YDH3W8T'
+      'x-api-key': 'FTC8KFS-VK74HTA-QJWY16M-NJ9C6JN'
     });
 
     this.http.post<any>('https://api.nowpayments.io/v1/payment', {
       price_amount: amount,
       price_currency: 'usd',
       pay_currency: 'usdtbsc',
-      ipn_callback_url: 'https://myusd.co/payment/callback'
+      ipn_callback_url: 'https://bitraze.org/payment/callback'
     }, { headers }).subscribe({
       next: (res) => {
-        console.log('Payment details', res);
+        // console.log('Payment details', res);
         this.paymentInfo = res; // save payment info for QR & status check
         this.submitting = false;
       },
@@ -143,7 +143,7 @@ export class DepositComponent implements OnInit {
 
     this.api.DepositWallet(payload).subscribe({
       next: (res) => {
-        console.log('Wallet updated:', res);
+        // console.log('Wallet updated:', res);
         this.submitting = false;
 
         alert('Wallet credited successfully 🎉');
@@ -180,7 +180,7 @@ export class DepositComponent implements OnInit {
     if (!this.paymentInfo?.payment_id) return;
 
     const headers = new HttpHeaders({
-      'x-api-key': 'W4107KT-X5T4DC2-MMHPRF7-YDH3W8T'
+      'x-api-key': 'FTC8KFS-VK74HTA-QJWY16M-NJ9C6JN'
     });
 
     this.http.get<any>(
@@ -189,7 +189,7 @@ export class DepositComponent implements OnInit {
     ).subscribe({
       next: (res) => {
         this.checkingStatus = false;
-        console.log('Payment status:', res);
+        // console.log('Payment status:', res);
 
         if (res.payment_status === 'finished') {
           this.alertType = 'success';

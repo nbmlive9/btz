@@ -30,19 +30,21 @@
 
   <!-- Price Cards -->
  <!-- Price Cards -->
- <div class="row text-center g-3">
+<div class="row text-center g-3">
   <div class="col-12 col-md-4" *ngFor="let p of pack">
     <div class="price-card shadow-lg p-4 rounded-4 text-white"
          [ngClass]="getPackageClass(p)">
-      <h5 class="fw-bold">${{p.amount}}</h5>
+      <h5 class="fw-bold">${{ p.amount }}</h5>
       <button class="btn btn-light fw-bold mt-2 px-4 rounded-pill"
-              data-bs-toggle="modal" data-bs-target="#customModal"
+              data-bs-toggle="modal"
+              data-bs-target="#customModal"
               (click)="openModal(p)">
         BUY
       </button>
     </div>
   </div>
 </div>
+
 
 
 </div>
@@ -53,13 +55,11 @@
   <!-- <div class="vstack gap-3" *ngFor="let row of adata"> -->
     <div class="vstack gap-3" *ngFor="let row of adata?.slice().reverse(); else noTransactions">
 
-    <div class="txn-card d-flex align-items-center p-3 rounded-3 shadow-sm  border-4">
+    <div class="txn-card d-flex align-items-center p-3 rounded-3 shadow-sm  border-4" *ngIf="row.ptype=='lite'">
       <div class="txn-icon me-3 fs-3 text-success"><i class="bi bi-person-circle"></i></div>
       <div class="flex-grow-1">
         <div class="d-flex justify-content-between">
-          <div class="txn-title fw-semibold" *ngIf="row.ptype=='lite'">Lite Package</div>
-          <div class="txn-title fw-semibold" *ngIf="row.ptype=='max'">MAX Package</div>
-          <div class="txn-title fw-semibold" *ngIf="row.ptype=='pro'">PRO Package</div>
+          <div class="txn-title fw-semibold" >Lite Package</div>
 
           <div class="txn-amt text-success fw-bold">{{row.amount | currency:'USD':true:'1.0-2' }}</div>
         </div>
