@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { AuthUserService } from '../service/auth-user.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TokenStorageService } from '../service/token-storage.service';
 import { Router } from '@angular/router';
 
@@ -13,41 +13,49 @@ import { Router } from '@angular/router';
 export class ProfileComponent implements OnInit {
   pfdata: any;
   form: FormGroup;
-  isEditing = false;   // ✅ control edit mode
-
+  isEditing = false;
+  showOtpForm = false;
+  formOtp: FormGroup;
+// Alert message
+  alertMessage = '';
+  alertType: 'success' | 'danger' = 'success'; // success or danger
   constructor(
     private location: Location,
     private api: AuthUserService,
-    private fb: FormBuilder, private token:TokenStorageService, private router:Router
+    private fb: FormBuilder,
+    private token: TokenStorageService,
+    private router: Router
   ) {
     this.form = this.fb.group({
-      name: [''],
+      name: ['', Validators.required],
       password: [''],
-      email: [''],
-      wallet1: ['']
+      email: ['', [Validators.required, Validators.email]],
+      wallet1: ['', Validators.required]
+    });
+
+    this.formOtp = this.fb.group({
+      otp: ['', Validators.required]
     });
   }
 
   ngOnInit() {
     this.getProfiledata();
+    this.form.disable(); // initially disabled
   }
 
-  Back() {
+  goBack() {
     this.location.back();
   }
 
-     signOut(): void {
-        this.token.signOut();
-        }
-
   enableEdit() {
     this.isEditing = true;
-    this.form.enable(); // allow typing
+    this.form.enable(); // allow editing
   }
 
   cancelEdit() {
     this.isEditing = false;
-    this.form.disable(); 
+    this.showOtpForm = false;
+    this.form.disable(); // lock fields
     this.form.patchValue({
       name: this.pfdata.name,
       password: '',
@@ -56,34 +64,94 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  updateProfile() {
-    const payload = this.form.value;
-    this.api.UpdateProfile(payload).subscribe({
-      next: (res: any) => {
-        // console.log('Profile updated successfully', res);
-        this.isEditing = false;
-        this.form.disable(); // lock fields after saving
-         setTimeout(() => {
-              this.router.navigateByUrl('/profile'); // reload component
-            }, 500);
-      },
-      error: (err: any) => {
-        console.error('Error updating profile', err);
+  save() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    // Step 1: Generate OTP
+    this.api.GenerateOtp().subscribe((res: any) => {
+      if (res.status === 1) {
+        this.showOtpForm = true;
+         this.showAlert('OTP sent to your registered email or phone.', 'success');
+      } else {
+        this.showAlert(res.message || 'OTP generation failed', 'danger');
       }
     });
   }
+
+  verifyOtpAndSave() {
+  if (this.formOtp.invalid) {
+    this.formOtp.markAllAsTouched();
+    return;
+  }
+
+  const otpPayload = { otp: this.formOtp.value.otp };
+
+  this.api.VerifyOtp(otpPayload).subscribe({
+    next: (res: any) => {
+      if (res.status === 1) {
+        this.showOtpForm = false;
+        this.updateProfile(); // update after OTP verified
+        this.formOtp.reset();
+            this.showAlert('OTP verified successfully. Updating profile...', 'success');
+      } else {
+   
+         this.showAlert(res.message || 'Invalid OTP', 'danger');
+      }
+    },
+    error: (err) => {
+      console.error(err);
+
+        this.showAlert(err.error?.message || 'OTP verification failed', 'danger');
+    }
+  });
+}
+
+
+  updateProfile() {
+    this.api.UpdateProfile(this.form.value).subscribe({
+      next: (res: any) => {
+        this.isEditing = false;
+        this.form.disable(); // lock fields after save
+        this.getProfiledata(); // reload data
+            this.showAlert('Profile updated successfully!', 'success');
+      },
+      error: (err) => {
+        console.error(err);
+         this.showAlert('Failed to update profile', 'danger');
+      }
+    });
+  }
+
   getProfiledata() {
     this.api.Profile().subscribe((res: any) => {
       this.pfdata = res.data[0];
-      // console.log(res);
-      
       this.form.patchValue({
         name: this.pfdata.name,
-        password:  this.pfdata.password,
+        password: '',
         wallet1: this.pfdata.wallet1,
         email: this.pfdata.email
       });
-      this.form.disable(); 
+      this.form.disable(); // always disable by default
     });
   }
+
+  signOut() {
+    this.token.signOut();
+  }
+
+   private showAlert(message: string, type: 'success' | 'danger') {
+    this.alertMessage = message;
+    this.alertType = type;
+
+    // Auto-hide after 4 seconds
+    setTimeout(() => {
+      this.alertMessage = '';
+    }, 2000);
+  }
+
+
+
 }

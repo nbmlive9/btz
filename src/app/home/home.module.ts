@@ -25,6 +25,9 @@ import { ReferralLinkShareComponent } from './referral-link-share/referral-link-
 import { GbonusIncomeComponent } from './gbonus-income/gbonus-income.component';
 import { WalletRoiReportComponent } from './wallet-roi-report/wallet-roi-report.component';
 import { PromotionBonusComponent } from './promotion-bonus/promotion-bonus.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { WithdrawFundComponent } from './withdraw-fund/withdraw-fund.component';
+import { WithdrawReportsComponent } from './withdraw-reports/withdraw-reports.component';
 
 
 
@@ -35,7 +38,7 @@ import { PromotionBonusComponent } from './promotion-bonus/promotion-bonus.compo
     HomeComponent,
     GTeamComponent,
     DashboardComponent,
-    FooterComponent, ProfileComponent, TransferAmountComponent, ReceiveComponent, DepositComponent, DirectTeamComponent, ReportComponent, BuyLiteComponent, BuyProComponent, BuyMaxComponent, ReferralsComponent, ReferralsAllDataComponent, SelfTransferComponent, ReferralLinkShareComponent, GbonusIncomeComponent, WalletRoiReportComponent, PromotionBonusComponent,
+    FooterComponent, ProfileComponent, TransferAmountComponent, ReceiveComponent, DepositComponent, DirectTeamComponent, ReportComponent, BuyLiteComponent, BuyProComponent, BuyMaxComponent, ReferralsComponent, ReferralsAllDataComponent, SelfTransferComponent, ReferralLinkShareComponent, GbonusIncomeComponent, WalletRoiReportComponent, PromotionBonusComponent, ForgotPasswordComponent, WithdrawFundComponent, WithdrawReportsComponent,
   ],
   imports: [
     CommonModule,

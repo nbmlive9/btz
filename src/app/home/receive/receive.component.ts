@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';   // ✅ Correct import
 import { AuthUserService } from '../service/auth-user.service';
 
@@ -9,6 +9,7 @@ import { AuthUserService } from '../service/auth-user.service';
   styleUrls: ['./receive.component.scss']
 })
 export class ReceiveComponent {
+@ViewChild('qrcodeElement', { static: false }) qrcodeElement!: ElementRef;
 
 rdata:any;
 pdata:any;
@@ -42,6 +43,31 @@ goBack() {
       this.rdata = res.data || []; // fallback to empty array
     });
   }
+
+downloadQr() {
+  // Find the canvas inside the QR code component container
+  const qrContainer = document.querySelector('.qr-box') as HTMLElement;
+  if (!qrContainer) {
+    console.error('QR container not found!');
+    return;
+  }
+
+  const canvas = qrContainer.querySelector('canvas') as HTMLCanvasElement;
+  if (!canvas) {
+    console.error('Canvas not found inside QR container!');
+    return;
+  }
+
+  // Convert canvas to data URL
+  const dataUrl = canvas.toDataURL('image/png');
+
+  // Trigger download
+  const link = document.createElement('a');
+  link.href = dataUrl;
+  link.download = 'qr-code.png';
+  link.click();
+}
+
   
 
 }

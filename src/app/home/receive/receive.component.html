@@ -8,14 +8,18 @@
         <div class="wallet-card">
             <h6 class="text-muted">Scan the QR Code and Pay</h6>
             <!-- QR Code -->
-            <div class="qr-box">
-                <qrcode [qrdata]="qrData" [width]="200"  [errorCorrectionLevel]="'M'" class="shadow rounded-3">
-                </qrcode>
-            </div>
+          <div class="qr-box" *ngIf="qrData">
+  <qrcode [qrdata]="qrData" [width]="200" [errorCorrectionLevel]="'M'" class="shadow rounded-3"></qrcode>
+</div>
+
+<button (click)="downloadQr()" class="btn btn-primary mt-2" [disabled]="!qrData">
+  Download QR
+</button>
+
             <!-- Wallet -->
             <h5>Wallet <span class="badge bg-light text-dark">General Address</span></h5>
             <div class="wallet-address">
-              {{ pdata.regid }}
+              {{ pdata?.regid }}
               <i class="fa fa-clone ms-2" aria-hidden="true"
                  style="cursor: pointer;"
                  (click)="copyAddress()"></i>
@@ -24,18 +28,19 @@
             <p *ngIf="copied" class="text-success">Copied!</p>
             
               
-            <a href="#" class="d-block text-primary small mb-3">Switch to GasFree Address ⇆</a>
+            <!-- <a href="#" class="d-block text-primary small mb-3">Switch to GasFree Address ⇆</a> -->
             <!-- Buttons -->
             <div class="d-flex justify-content-between">
-                <button class="btn btn-outline-primary btn-custom w-50 me-2">
-                  <i class="fa fa-bookmark me-1" aria-hidden="true"></i>
-                  Save QR 
-                </button>
               
-                <button class="btn btn-outline-primary btn-custom w-50">
+<!--               
+                  <button class="btn btn-outline-primary btn-custom w-50 me-2" (click)="downloadQr()"> 
+                  <i class="fa fa-bookmark me-1" aria-hidden="true"></i>
+                  Download 
+                </button> -->
+                <!-- <button class="btn btn-outline-primary btn-custom w-50">
                   <i class="fa fa-share-square-o me-1 " aria-hidden="true"></i>
                   Share
-                </button>
+                </button> -->
               </div>
               
 
@@ -47,7 +52,7 @@
         You can only transfer TRON-based tokens (e.g. TRX or TRC10/20/721 tokens)
         to this address. Transfers of other tokens cannot be revoked.
     </p> -->
-    <main class="container mb-5">
+    <main class="container mb-5 py-5">
       <div class="d-flex justify-content-between align-items-center mb-2">
         <div class="fw-bold">Credit Transactions</div>
       </div>

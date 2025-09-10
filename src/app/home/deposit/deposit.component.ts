@@ -32,7 +32,9 @@ export class DepositComponent implements OnInit {
   alertMessage: string = '';
   alertType: string = '';
   pdata: any;
-
+ timer: any;
+  countdown = 0;           // Timer counter
+  showTimer = false; 
   constructor(
     private location: Location,
     private api: AuthUserService,
@@ -133,29 +135,57 @@ export class DepositComponent implements OnInit {
 
   /** Step 3: Call backend API to credit wallet */
   onSubmit(amount: number, transno: string) {
-    this.submitting = true;
+  if (!amount || !transno) {
+    console.error('Invalid amount or transaction number', amount, transno);
+    alert('Invalid payment data received.');
+    return;
+  }
 
-    const payload = {
-      amount: amount.toString(),  // ✅ convert number to string
-      transno: transno,           // ✅ NOWPayments payment_id
-      note: this.form.value.note || 'NOWPayments deposit'
-    };
+  this.submitting = true;
 
-    this.api.DepositWallet(payload).subscribe({
-      next: (res) => {
-        // console.log('Wallet updated:', res);
-        this.submitting = false;
+  const payload = {
+    amount: amount.toString(), // ✅ ensure it's a string
+    transno: transno,          // ✅ NOWPayments payment_id
+    note: this.form.value.note || 'NOWPayments deposit'
+  };
 
-        alert('Wallet credited successfully 🎉');
-        this.paymentInfo = null;
-        this.form.reset();
+  this.api.DepositWallet(payload).subscribe({
+    next: (res) => {
+      // console.log('Wallet updated:', res);
+      this.submitting = false;
+
+      //alert('Wallet credited successfully 🎉');
+      this.paymentInfo = null;
+      this.form.reset();
+
+      // ✅ Force reload /deposit route
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
         this.router.navigate(['/deposit']);
-      },
-      error: (err) => {
-        console.error('Deposit error:', err);
-        this.submitting = false;
+      });
+    },
+    error: (err) => {
+      console.error('Deposit error:', err);
+      this.submitting = false;
+    }
+  });
+}
+
+ startCountdown(seconds: number) {
+    this.countdown = seconds;
+    this.showTimer = true;
+
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
+
+    this.timer = setInterval(() => {
+      if (this.countdown > 0) {
+        this.countdown--;
+      } else {
+        clearInterval(this.timer);
+        this.showTimer = false; // hide timer when finished
       }
-    });
+    }, 1000);
   }
 
   // 📋 Copy Address
@@ -176,43 +206,47 @@ export class DepositComponent implements OnInit {
 
   /** Step 2: Check payment status */
   checkPaymentStatus() {
-    this.checkingStatus = true;
-    if (!this.paymentInfo?.payment_id) return;
+  this.checkingStatus = true;
+  if (!this.paymentInfo?.payment_id) return;
 
-    const headers = new HttpHeaders({
-      'x-api-key': 'FTC8KFS-VK74HTA-QJWY16M-NJ9C6JN'
-    });
+  const headers = new HttpHeaders({
+    'x-api-key': 'FTC8KFS-VK74HTA-QJWY16M-NJ9C6JN'
+  });
 
-    this.http.get<any>(
-      `https://api.nowpayments.io/v1/payment/${this.paymentInfo.payment_id}`,
-      { headers }
-    ).subscribe({
-      next: (res) => {
-        this.checkingStatus = false;
-        // console.log('Payment status:', res);
+  this.http.get<any>(
+    `https://api.nowpayments.io/v1/payment/${this.paymentInfo.payment_id}`,
+    { headers }
+  ).subscribe({
+    next: (res) => {
+      this.checkingStatus = false;
+      // console.log('Payment status:', res);
 
-        if (res.payment_status === 'finished') {
-          this.alertType = 'success';
-          this.alertMessage = 'Deposit successful! ✅';
-          this.onSubmit(res.actually_paid, res.payment_id);
+         this.startCountdown(60);
+      if (res.payment_status === 'finished') {
+        this.alertType = 'success';
+        this.alertMessage = 'Deposit successful! ✅';
 
-        } else if (res.payment_status === 'failed') {
-          this.alertType = 'danger';
-          this.alertMessage = 'Payment failed ❌. Please try again.';
+        // ✅ Use outcome_amount here
+        this.onSubmit(res.outcome_amount, res.payment_id);
 
-        } else {
-          this.alertType = 'warning';
-          this.alertMessage = 'Payment is still pending ⏳. Wait for 2 min..';
-        }
-      },
-      error: (err) => {
-        console.error(err);
-        this.checkingStatus = false;
+      } else if (res.payment_status === 'failed') {
         this.alertType = 'danger';
-        this.alertMessage = 'Error checking payment status. Please try again later.';
+        this.alertMessage = 'Payment failed ❌. Please try again.';
+
+      } else {
+        this.alertType = 'warning';
+        this.alertMessage = 'Payment is still pending ⏳. Wait for 2 min..';
       }
-    });
-  }
+    },
+    error: (err) => {
+      console.error(err);
+      this.checkingStatus = false;
+      this.alertType = 'danger';
+      this.alertMessage = 'Error checking payment status. Please try again later.';
+    }
+  });
+}
+
 
   formatAmount(event: any) {
     let value = event.target.value;

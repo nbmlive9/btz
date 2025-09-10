@@ -21,30 +21,44 @@
       </div>
 
       <div class="modal-body">
-        <p class="text-muted small mb-4 text-center">
-          Share your referral link with friends and earn rewards!
-        </p>
+  <p class="text-muted small mb-4 text-center">
+    Share your referral link with friends and earn rewards!
+  </p>
 
-        <div class="d-flex justify-content-around">
-          <!-- WhatsApp -->
-          <div class="share-icon" (click)="shareTo('whatsapp')">
-            <i class="bi bi-whatsapp"></i>
-            <span>WhatsApp</span>
-          </div>
+  <!-- Share buttons -->
+  <div class="d-flex justify-content-around mb-4 flex-wrap">
+    <!-- WhatsApp -->
+    <div class="share-icon text-center mb-2" (click)="shareTo('whatsapp')">
+      <i class="bi bi-whatsapp fs-4"></i>
+      <div class="small">WhatsApp</div>
+    </div>
 
-          <!-- Telegram -->
-          <div class="share-icon" (click)="shareTo('telegram')">
-            <i class="bi bi-telegram"></i>
-            <span>Telegram</span>
-          </div>
+    <!-- Telegram -->
+    <div class="share-icon text-center mb-2" (click)="shareTo('telegram')">
+      <i class="bi bi-telegram fs-4"></i>
+      <div class="small">Telegram</div>
+    </div>
 
-          <!-- IMO -->
-          <div class="share-icon" (click)="shareTo('imo')">
-            <img src="assets/imo.png" alt="IMO" />
-            <span>IMO</span>
-          </div>
-        </div>
-      </div>
+    <!-- IMO -->
+    <div class="share-icon text-center mb-2" (click)="shareTo('imo')">
+      <img src="assets/imo.png" alt="IMO" style="width:50px; height:50px;" />
+      <div class="small">IMO</div>
+    </div>
+  </div>
+
+  <!-- Copy referral link card -->
+  <div class="card p-3 mb-3 shadow-sm rounded-3 text-center">
+    <p class="mb-2 text-truncate" style="max-width: 100%;">
+      https://bitraze.org/btz/referral/{{ pfdata?.regid }}
+    </p>
+    <button class="btn btn-outline-primary btn-sm w-100 d-flex align-items-center justify-content-center"
+            (click)="copyReferralLink()">
+      <i class="fa fa-clone me-2"></i> Copy Link
+    </button>
+    <p *ngIf="copiedLink" class="text-success small mt-2 mb-0">Copied!</p>
+  </div>
+</div>
+
 
       <div class="modal-footer border-0">
         <button class="btn btn-secondary w-100 rounded-pill" data-bs-dismiss="modal">
@@ -81,7 +95,9 @@
     <div class="card-body">
       <div class="d-flex justify-content-between align-items-center mb-2">
         <h6 class="text-white fw-bold"><i class="bi bi-wallet2 me-1"></i> Wallet Asset</h6>
-        <small class="btn btn-sm btn-light text-success fw-semibold">Go to Withdraw <i class="bi bi-arrow-right"></i></small>
+        <small class="btn btn-sm btn-light text-success fw-semibold"  data-bs-toggle="modal"
+                data-bs-target="#withdrawfunds"
+                (click)="openWithdrawModal()">Go to Withdraw <i class="bi bi-arrow-right"></i></small>
       </div>
       <h4 class="fw-bold text-white d-flex align-items-center">{{ pfdata?.walletamount | currency:'USD':'symbol':'1.0-2' }} </h4>
       <p class="text-white mb-1">{{ pfdata?.actwallet | currency:'USD':'symbol':'1.0-2' }} P2P</p>
@@ -138,52 +154,41 @@
         <i class="bi bi-file-earmark-text fs-4"></i>
         <p class="mt-1 small">Reports</p>
       </div>
+         <div class="scroll-item text-center" routerLink="/withdrawreport">
+        <i class="bi bi-credit-card fs-4"></i>
+        <p class="mt-1 small">Withdraw</p>
+      </div>
     </div>
   </div>
 
 <div class="container mt-3">
   <h5 class="fw-bold mb-2">Investment Plans</h5>
-  <div class="d-flex overflow-auto hide-scrollbar gap-3 py-2">
+  <div class="d-flex overflow-auto hide-scrollbar">
     
     <!-- Card 1: Bitraze Lite -->
-    <div class="investment-card card-lite flex-shrink-0 p-3 rounded-4 shadow-sm text-white text-center" style="width: 250px;">
-      <h5 class="fw-bold mb-2">Bitraze Lite</h5>
-      <p class="mb-2">0.5% Daily Bonus</p>
-      <div class="join-amount mb-3">
-        <span class="amount">$10</span>
-        <span class="amount">$25</span>
-        <span class="amount">$50</span>
+    <div class="investment-card card-lite flex-shrink-0" routerLink="/bitraze-lite">
+      <div class="card-image">
+        <img src="assets/c1.png" alt="Bitraze Lite">
       </div>
-      <button class="btn btn-light btn-sm fw-bold" routerLink="/bitraze-lite">Buy Now</button>
     </div>
 
     <!-- Card 2: Bitraze Pro -->
-    <div class="investment-card card-pro flex-shrink-0 p-3 rounded-4 shadow-sm text-white text-center" style="width: 250px;">
-      <h5 class="fw-bold mb-2">Bitraze Pro</h5>
-      <p class="mb-2">0.6% Daily Bonus</p>
-      <div class="join-amount mb-3">
-        <span class="amount">$100</span>
-        <span class="amount">$250</span>
-        <span class="amount">$500</span>
+    <div class="investment-card card-pro flex-shrink-0" routerLink="/bitraze-pro">
+      <div class="card-image">
+        <img src="assets/c2.png" alt="Bitraze Pro">
       </div>
-      <button class="btn btn-light btn-sm fw-bold" routerLink="/bitraze-pro">Buy Now</button>
     </div>
 
     <!-- Card 3: Bitraze Max -->
-    <div class="investment-card card-max flex-shrink-0 p-3 rounded-4 shadow-sm text-white text-center" style="width: 250px;">
-      <h5 class="fw-bold mb-2">Bitraze Max</h5>
-      <p class="mb-2">0.7% Daily Bonus</p>
-      <div class="join-amount mb-3">
-        <span class="amount">$1000</span>
-        <span class="amount">$2500</span>
-        <span class="amount">$5000</span>
-        <span class="amount">$10000</span>
+    <div class="investment-card card-max flex-shrink-0" routerLink="/bitraze-max">
+      <div class="card-image">
+        <img src="assets/c3.jpeg" alt="Bitraze Max">
       </div>
-      <button class="btn btn-light btn-sm fw-bold" routerLink="/bitraze-max">Buy Now</button>
     </div>
 
   </div>
 </div>
+
 
 <div class="container">
   <div class="global-fund-card flex-shrink-0 p-3 rounded-4 shadow-sm text-white text-center">
@@ -214,8 +219,11 @@
 <div class="mb-5">
   <!-- TRANSACTIONS VIEW -->
   <div class="container mt-3 mb-5" *ngIf="setassets">
-  <div class="fw-bold mb-2 fs-5">Recent Transactions</div>
-
+  <!-- <div class="fw-bold mb-2 fs-5">Recent Transactions</div> -->
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <div class="fw-bold">Recent Transactions</div>
+        <a routerLink="/report" class="small text-decoration-none">View all</a>
+      </div>
   <!-- Loading Spinner -->
   <div class="text-center my-4" *ngIf="loadingWallet">
     <img src="assets/favicon.png" alt="Loading..." style="width:50px; height:50px;">
@@ -228,7 +236,7 @@
       <div class="txn-icon me-3"><i class="bi bi-person fs-4"></i></div>
       <div class="flex-grow-1 d-flex justify-content-between align-items-center">
         <div>
-          <div class="fw-semibold">Level {{ wd.level }} Credit</div>
+          <div class="fw-semibold">{{ wd.level }} {{wd.remark}}</div>
           <div class="text-muted small">{{ wd.cdate | date:'dd/MM/yyyy' }}</div>
         </div>
         <div class="text-end">
@@ -276,6 +284,40 @@
         <!-- Load component only when gbonus = true -->
         <ng-container *ngIf="gbonus">
           <app-gbonus-income></app-gbonus-income>
+        </ng-container>
+         <ng-container *ngIf="withdraw">
+          <app-withdraw-fund></app-withdraw-fund>
+        </ng-container>
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer border-0">
+        <button class="btn btn-secondary w-100 rounded-pill" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- G-Team Income Modal -->
+<div class="modal fade" id="withdrawfunds" tabindex="-1" aria-labelledby="gIncomeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content rounded-4 shadow-lg border-0">
+
+      <!-- Header -->
+      <div class="modal-header bg-gradient-blue text-white rounded-top-4">
+        <h5 class="modal-title fw-bold" id="gIncomeModalLabel">Withdraw Fund</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body p-3">
+       
+         <ng-container *ngIf="withdraw">
+          <app-withdraw-fund></app-withdraw-fund>
         </ng-container>
       </div>
 

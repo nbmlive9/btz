@@ -16,6 +16,7 @@ import { ReferralsAllDataComponent } from './referrals-all-data/referrals-all-da
 import { SelfTransferComponent } from './self-transfer/self-transfer.component';
 import { WalletRoiReportComponent } from './wallet-roi-report/wallet-roi-report.component';
 import { PromotionBonusComponent } from './promotion-bonus/promotion-bonus.component';
+import { WithdrawReportsComponent } from './withdraw-reports/withdraw-reports.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -35,6 +36,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'walletri', component: WalletRoiReportComponent },
   { path: 'btzbonus', component: PromotionBonusComponent },
+  { path: 'withdrawreport', component: WithdrawReportsComponent },
 
 ];
 

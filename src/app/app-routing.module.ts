@@ -4,6 +4,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './home/service/auth.guard';
 import { ReferralLinkShareComponent } from './referral-link-share/referral-link-share.component';
+import { ForgotPasswordComponent } from './home/forgot-password/forgot-password.component';
 
 const routes: Routes = [
   
@@ -18,6 +19,10 @@ const routes: Routes = [
    {
     path: 'sign',
     component: SignUpComponent
+  },
+    {
+    path: 'forgot',
+    component: ForgotPasswordComponent
   },
      {
     path: 'referral/:regid',

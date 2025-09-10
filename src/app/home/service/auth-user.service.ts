@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TokenStorageService } from './token-storage.service';
+import { Observable } from 'rxjs';
 
 const AUTH_API ='https://bitraze.org/BTRZ/BTRZ/User/'
 
@@ -378,6 +379,74 @@ DepositWallet(value: { amount: string, note: string, transno: string }) {
    };
      return this.http.get(AUTH_API + 'Level_members', httpOptions);
  }
+
+
+
+GenerateOtp() {
+    const token = this.token.getToken(); 
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {})
+      }),
+    };
+       return this.http.get(AUTH_API + 'GenerateOtp', httpOptions);
+  }
+
+  VerifyOtp(value: { otp: string }): Observable<any> {
+    const token = this.token.getToken();
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    });
+
+    // The OTP should be sent as body (POST), not as part of headers
+    return this.http.post(AUTH_API + 'Verify_Otp', { otp: value.otp }, { headers });
+  }
+
+
+  WithdrawFunds(value: {
+    amount: string;
+  }) {
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    };
+    return this.http.post(
+      AUTH_API + 'Withdrawrequest',
+      { 
+        "amount":value.amount,
+      },
+      httpOptions
+    );
+  }
+
+PendingWithdraw() {
+    const token1 = this.token.getToken();
+ const httpOptions = {
+   headers: new HttpHeaders({
+     'Content-Type': 'application/json',
+     'Authorization': 'Bearer ' + token1
+   }),
+   };
+     return this.http.get(AUTH_API + 'Withdrawrequestdata_pending', httpOptions);
+ }
+
+CompletedWithdraw() {
+    const token1 = this.token.getToken();
+ const httpOptions = {
+   headers: new HttpHeaders({
+     'Content-Type': 'application/json',
+     'Authorization': 'Bearer ' + token1
+   }),
+   };
+     return this.http.get(AUTH_API + 'Withdrawrequestdata_complete', httpOptions);
+ }
+
 
  
 }

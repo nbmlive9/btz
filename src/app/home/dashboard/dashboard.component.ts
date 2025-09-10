@@ -29,6 +29,7 @@ export class DashboardComponent {
   pfdata:any;
   hdata:any;
     gbonus: boolean = false;
+      withdraw: boolean = false;
   setassets: boolean = true;
   glevel: boolean = false;
   referrals: boolean = false;
@@ -40,9 +41,18 @@ export class DashboardComponent {
      showSection1(section: string) {
      this.gbonus = section === 'gbonus';
   }
+
+      showSection2(section: string) {
+     this.withdraw = section === 'withdraw';
+  }
     openGBonusModal() {
     this.showSection1('gbonus');  // set gbonus true
   }
+
+      openWithdrawModal() {
+    this.showSection2('withdraw');  // set gbonus true
+  }
+
   wdata:any;
    permissionDenied: boolean = false;
    loadingWallet: boolean = false;
@@ -82,6 +92,24 @@ export class DashboardComponent {
       this.pfdata=res.data[0];
     })
   }
+
+  copiedLink: boolean = false;
+
+copyReferralLink() {
+  const referralUrl = `https://bitraze.org/btz/referral/${this.pfdata?.regid}`;
+  if (!referralUrl) return;
+
+  navigator.clipboard.writeText(referralUrl).then(() => {
+    this.copiedLink = true;
+
+    // Hide the message after 2 seconds
+    setTimeout(() => {
+      this.copiedLink = false;
+    }, 2000);
+  });
+}
+
+
     getDashboarddata(){
     this.api.DashboardData().subscribe((res:any)=>{
       // console.log('homedata',res);
