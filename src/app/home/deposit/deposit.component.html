@@ -20,8 +20,7 @@
         <form [formGroup]="form" (ngSubmit)="generatePayment()">
           <div class="mb-3">
             <label class="form-label fw-semibold">Amount (USDT BEP20 Network Only)</label>
-            <input type="number" formControlName="amount" min="2" class="form-control form-control-lg rounded-3"
-              placeholder="Enter Amount" (input)="formatAmount($event)">
+            <input type="number" formControlName="amount" min="10" class="form-control form-control-lg rounded-3" placeholder="Enter Amount" (input)="formatAmount($event)">
             <div *ngIf="form.get('amount')?.invalid && form.get('amount')?.touched" class="text-danger">
               Amount is required and must be ≥ $10
             </div>
