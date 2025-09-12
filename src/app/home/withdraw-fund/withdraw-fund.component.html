@@ -1,31 +1,48 @@
 <form [formGroup]="form" novalidate>
-     <h5 class="modal-title text-primary">Wallet: {{ pfdata?.walletamount | currency:'USD':true:'1.0-2' }}</h5>
-       <div *ngIf="successMessage" class="alert alert-success text-center">
+  <h5 class="modal-title text-primary">
+    Wallet: {{ pfdata?.walletamount | currency:'USD':true:'1.0-2' }}
+  </h5>
+
+  <div *ngIf="successMessage" class="alert alert-success text-center">
     {{ successMessage }}
   </div>
   <div *ngIf="errorMessage" class="alert alert-danger text-center">
     {{ errorMessage }}
   </div>
-    <div class="mb-3">
-         <label class="form-label fw-semibold">Enter Amount</label>
-        <input type="number" class="form-control form-control-lg rounded-3" formControlName="amount"   placeholder="Enter Amount" min="10">
-        <div *ngIf="form.get('amount')?.invalid && form.get('amount')?.touched" class="text-danger">
-              Amount is required and must be ≥ $10
-            </div>
-          <input type="text" class="form-control form-control-lg rounded-3 mt-2"   placeholder="{{pfdata?.wallet1}}" readonly>
+
+  <div class="mb-3">
+    <label class="form-label fw-semibold">Enter Amount</label>
+    <input type="number" class="form-control form-control-lg rounded-3" formControlName="amount" placeholder="Enter Amount" min="10">
+    <div *ngIf="form.get('amount')?.invalid && form.get('amount')?.touched" class="text-danger">
+      Amount is required and must be ≥ $10
     </div>
-       <button class="btn btn-success rounded-pill px-4"
-                [disabled]="!form.valid"
-                (click)="Withdraw()"
-                data-bs-dismiss="modal">
-          Confirm Withdraw
-        </button>
+
+    <!-- Wallet display -->
+    <input type="text" class="form-control form-control-lg rounded-3 mt-2" 
+           [placeholder]="pfdata?.wallet1 ? pfdata.wallet1 : 'Update Wallet Address'" 
+           readonly>
+  </div>
+
+  <!-- Show button only if wallet exists -->
+  <button *ngIf="pfdata?.wallet1" 
+          class="btn btn-success rounded-pill px-4"
+          [disabled]="!form.valid"
+          (click)="Withdraw()"
+          data-bs-dismiss="modal">
+    Confirm Withdraw
+  </button>
+
+  <!-- Show message if wallet missing -->
+  <div *ngIf="!pfdata?.wallet1" class="text-danger fw-semibold mt-2">
+    Please update your wallet address to withdraw.
+  </div>
 </form>
+
 
 <main class="container pt-2">
     <div class="d-flex justify-content-between align-items-center mb-2">
       <div class="fw-bold">Pending Funds</div>
-      <a routerLink="/withdrawreport" class="small text-decoration-none">View all</a>
+      <!-- <a routerLink="/withdrawreport" class="small text-decoration-none">View all</a> -->
     </div>
 
     <div class="vstack gap-2 mt-3 mb-3" *ngFor="let row of data1">

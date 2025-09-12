@@ -3,8 +3,7 @@
   <!-- HEADER -->
   <header class="wallet-header shadow-sm d-flex align-items-center justify-content-between px-3 py-2 bg-white rounded-bottom">
     <div class="d-flex flex-column">
-      <h6 class="m-0 fw-bold">{{ pfdata?.name }}</h6>
-      <small class="text-muted">{{ pfdata?.regid }}</small>
+
     </div>
     <img src="assets/favicon.png" alt="Logo" class="header-logo">
     <div class="d-flex align-items-center gap-3">
@@ -69,6 +68,13 @@
   </div>
 </div>
   </header>
+
+  <div class="staking-banner dashboard-welcome mx-3 p-3 rounded-4 shadow-lg d-flex bg-white mt-2 ">
+  <div class="welcome-text">
+    <h6 class="fw-bold mb-1">Welcome, {{ pfdata?.name }}!</h6>
+    <p class="mb-0 text-white">Your RegID: <span class="fw-semibold">{{ pfdata?.regid }}</span></p>
+  </div>
+</div>
 
   
     <!-- CONGRATULATION STAKING BANNER -->

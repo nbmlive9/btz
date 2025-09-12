@@ -53,21 +53,21 @@ data1:any;
                  this.form.reset();
                   this.successMessage = 'Successfully Withdraw Amount';
           this.errorMessage = '';
-      //       setTimeout(() => {
-      //   this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      //     this.router.navigate(['/dashboard']);
-      //   });
-      // }, 2000);
+            setTimeout(() => {
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/dashboard']);
+        });
+      }, 1000);
             } else {
               // console.log(a);
                this.form.markAllAsTouched();
               this.successMessage = '';
           this.errorMessage = '❌ Withdraw failed. Please try again.';
-      //       setTimeout(() => {
-      //   this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      //     this.router.navigate(['/selftransfer']);
-      //   });
-      // }, 2000);
+            setTimeout(() => {
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/selftransfer']);
+        });
+      }, 1000);
             }
           },
           (err: any) => {
