@@ -242,7 +242,7 @@
 
 
 .staking-banner {
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  background: linear-gradient(135deg, #155ee6 0%, #2a5298 100%);
   color: #fff;
   border-left: 5px solid #ffc107; // highlight stripe
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -337,6 +337,16 @@
 
 .dashboard-welcome {
     background: linear-gradient(90deg, #0d6efd 0%, #6610f2 100%);
+    color: #fff;
+}
+
+.dashboard-welcome1 {
+    background: linear-gradient(90deg, #6610f2 0%, #0d6efd 100%);
+    color: #fff;
+}
+
+.dashboard-welcome2 {
+    background: linear-gradient(90deg, #033797 0%, #0f0b00 100%);
     color: #fff;
 }
 
